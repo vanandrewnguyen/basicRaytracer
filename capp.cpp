@@ -23,6 +23,18 @@ bool CApp::onInit() {
 	// Create the current renderer
 	if (currWindow != NULL) {
 		currRenderer = SDL_CreateRenderer(currWindow, -1, 0);
+
+		// Init Image Instance
+		//currImage.init(windowWidth, windowHeight, currRenderer);
+
+		// Colour Variations (Debugging)
+		for (int x = 0; x < windowWidth; ++x) {
+			for (int y = 0; y < windowWidth; ++y) {
+				double red = (static_cast<double>(x) / windowWidth) * 255.0;
+				double green = (static_cast<double>(x) / windowHeight) * 255.0;
+				//currImage.setPixel(x, y, red, green, 0.0);
+			}
+		}
 	} else {
 		return false;
 	}
@@ -54,18 +66,20 @@ void CApp::onEvent(SDL_Event *event) {
 	}
 }
 
-// Called per frame
 void CApp::onLoop() {
+
+}
+
+void CApp::onRender() {
 	// Set BG Col
 	SDL_SetRenderDrawColor(currRenderer, 255, 255, 255, 255);
 	SDL_RenderClear(currRenderer);
 
+	// Display image tex
+	//currImage.handleDisplay();
+
 	// Draw screen
 	SDL_RenderPresent(currRenderer);
-}
-
-void CApp::onRender() {
-	
 }
 
 void CApp::onExit() {

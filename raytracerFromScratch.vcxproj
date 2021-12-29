@@ -152,6 +152,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="capp.h" />
+    <ClInclude Include="image.cpp" />
+    <ClInclude Include="image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
