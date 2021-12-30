@@ -26,10 +26,10 @@
     <ClInclude Include="capp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="image.h">
+    <ClInclude Include="cimage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="image.cpp">
+    <ClInclude Include="cimage.cpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,3 +1,4 @@
+#pragma once
 #include "capp.h"
 
 // Construct Class
@@ -25,14 +26,14 @@ bool CApp::onInit() {
 		currRenderer = SDL_CreateRenderer(currWindow, -1, 0);
 
 		// Init Image Instance
-		//currImage.init(windowWidth, windowHeight, currRenderer);
+		currImage.init(windowWidth, windowHeight, currRenderer);
 
 		// Colour Variations (Debugging)
 		for (int x = 0; x < windowWidth; ++x) {
-			for (int y = 0; y < windowWidth; ++y) {
+			for (int y = 0; y < windowHeight; ++y) {
 				double red = (static_cast<double>(x) / windowWidth) * 255.0;
-				double green = (static_cast<double>(x) / windowHeight) * 255.0;
-				//currImage.setPixel(x, y, red, green, 0.0);
+				double green = (static_cast<double>(y) / windowHeight) * 255.0;
+				currImage.setPixel(x, y, red, green, 0.0);
 			}
 		}
 	} else {
@@ -76,7 +77,7 @@ void CApp::onRender() {
 	SDL_RenderClear(currRenderer);
 
 	// Display image tex
-	//currImage.handleDisplay();
+	currImage.handleDisplay();
 
 	// Draw screen
 	SDL_RenderPresent(currRenderer);

@@ -1,12 +1,12 @@
-#include "image.h"
+#pragma once
+#include "cimage.h"
 #include <fstream>
 
 // Constructor
 Image::Image() {
-	screenSizeX = 0; 
+	screenSizeX = 0;
 	screenSizeY = 0;
 	screenTexture = NULL;
-	screenRenderer = NULL;
 }
 
 // Destructor

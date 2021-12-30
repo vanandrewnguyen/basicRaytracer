@@ -2,8 +2,9 @@
 #ifndef CAPP_H
 #define CAPP_H
 
+#include "cimage.h"
 #include <SDL.h>
-#include "image.h"
+
 
 class CApp {
 public:
