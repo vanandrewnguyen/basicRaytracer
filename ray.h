@@ -8,6 +8,7 @@
 class Ray {
 public:
 	// Constructor
+	Ray();
 	Ray(const qbVector<double> &pointA, const qbVector<double> &pointB);
 
 	qbVector<double> getPointA() const;

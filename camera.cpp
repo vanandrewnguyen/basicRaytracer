@@ -86,13 +86,16 @@ double Camera::getAspect() {
 }
 
 // Create a ray instance
-Ray Camera::createRay(float projectionScreenX, float projectionScreenY) {
+bool Camera::createRay(float projectionScreenX, float projectionScreenY, Ray& cameraRay) {
 	// Compute location of the screen in world coords
 	qbVector<double> screenWorldA = projectionScreenCentre + (projectionScreenU * projectionScreenX);
 	qbVector<double> screenWorldCoord = screenWorldA + (projectionScreenV * projectionScreenY);
 
 	// Use this point to compute ray
-	return Ray(currCamPos, screenWorldCoord);
+	cameraRay.currPointA = currCamPos;
+	cameraRay.currPointB = screenWorldCoord;
+	cameraRay.currVecAB = screenWorldCoord - currCamPos;
+	return true;
 }
 
 // Update the camera

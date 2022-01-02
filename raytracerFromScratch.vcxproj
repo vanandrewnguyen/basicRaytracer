@@ -150,6 +150,8 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="capp.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="objectBase.cpp" />
+    <ClCompile Include="objectSphere.cpp" />
     <ClCompile Include="ray.cpp" />
     <ClCompile Include="scene.cpp" />
   </ItemGroup>
@@ -158,6 +160,8 @@
     <ClInclude Include="capp.h" />
     <ClInclude Include="image.cpp" />
     <ClInclude Include="image.h" />
+    <ClInclude Include="objectBase.h" />
+    <ClInclude Include="objectSphere.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="scene.h" />
   </ItemGroup>

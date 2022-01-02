@@ -17,8 +17,8 @@ bool CApp::onInit() {
 
 	// Create the current window
 	const char* windowName = "Simple Raytracer";
-	int windowWidth = 1280;
-	int windowHeight = 720;
+	int windowWidth = 640;
+	int windowHeight = 360;
 	currWindow = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
 
 	// Create the current renderer
@@ -28,26 +28,16 @@ bool CApp::onInit() {
 		// Init Image Instance
 		currImage.init(windowWidth, windowHeight, currRenderer);
 
-		// Init Camera instance
-		Camera testCam;
-		testCam.setPos(qbVector<double>(std::vector<double>{0.0, 0.0, 0.0}));
-		testCam.setLookat(qbVector<double>(std::vector<double>{0.0, 2.0, 0.0}));
-		testCam.setUp(qbVector<double>(std::vector<double>{0.0, 0.0, 1.0}));
-		testCam.setLen(1.0);
-		testCam.setHorSize(1.0);
-		testCam.setAspect(1.0);
-		testCam.updateCameraGeometry();
+		// Set BG Col to white
+		SDL_SetRenderDrawColor(currRenderer, 255, 255, 255, 255);
+		SDL_RenderClear(currRenderer);
 
-		// Get screen centre and UV Vectors and display
-		auto screenCentre = testCam.getScreenCentre();
-		auto screenU = testCam.getUVec();
-		auto screenV = testCam.getVVec();
-		std::cout << "Camera Screen Centre" << std::endl;
-		printVector(screenCentre);
-		std::cout << "\nUV Vectors" << std::endl;
-		printVector(screenU);
-		std::cout << "\n" << std::endl;
-		printVector(screenV);
+		// Render scene
+		currScene.render(currImage);
+
+		// Display scene
+		currImage.handleDisplay();
+		SDL_RenderPresent(currRenderer);
 	} else {
 		return false;
 	}
@@ -84,6 +74,7 @@ void CApp::onLoop() {
 }
 
 void CApp::onRender() {
+	/*
 	// Set BG Col
 	SDL_SetRenderDrawColor(currRenderer, 255, 255, 255, 255);
 	SDL_RenderClear(currRenderer);
@@ -96,6 +87,7 @@ void CApp::onRender() {
 
 	// Draw screen
 	SDL_RenderPresent(currRenderer);
+	*/
 }
 
 void CApp::onExit() {
