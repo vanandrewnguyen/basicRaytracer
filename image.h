@@ -84,6 +84,16 @@ public:
 		SDL_RenderCopy(screenRenderer, screenTexture, &srcRect, &bounds);
 	}
 
+	// Get window width and height (drawing canvas)
+	int getSizeX() {
+		return screenSizeX;
+	}
+
+	int getSizeY() {
+		return screenSizeY;
+	}
+
+
 private:
 	Uint32 convertColour(const double r, const double g, const double b) {
 		// Type cast to convert data types

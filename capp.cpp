@@ -28,14 +28,26 @@ bool CApp::onInit() {
 		// Init Image Instance
 		currImage.init(windowWidth, windowHeight, currRenderer);
 
-		// Colour Variations (Debugging)
-		for (int x = 0; x < windowWidth; ++x) {
-			for (int y = 0; y < windowHeight; ++y) {
-				double red = (static_cast<double>(x) / windowWidth) * 255.0;
-				double green = (static_cast<double>(y) / windowHeight) * 255.0;
-				currImage.setPixel(x, y, red, green, 0.0);
-			}
-		}
+		// Init Camera instance
+		Camera testCam;
+		testCam.setPos(qbVector<double>(std::vector<double>{0.0, 0.0, 0.0}));
+		testCam.setLookat(qbVector<double>(std::vector<double>{0.0, 2.0, 0.0}));
+		testCam.setUp(qbVector<double>(std::vector<double>{0.0, 0.0, 1.0}));
+		testCam.setLen(1.0);
+		testCam.setHorSize(1.0);
+		testCam.setAspect(1.0);
+		testCam.updateCameraGeometry();
+
+		// Get screen centre and UV Vectors and display
+		auto screenCentre = testCam.getScreenCentre();
+		auto screenU = testCam.getUVec();
+		auto screenV = testCam.getVVec();
+		std::cout << "Camera Screen Centre" << std::endl;
+		printVector(screenCentre);
+		std::cout << "\nUV Vectors" << std::endl;
+		printVector(screenU);
+		std::cout << "\n" << std::endl;
+		printVector(screenV);
 	} else {
 		return false;
 	}
@@ -76,6 +88,9 @@ void CApp::onRender() {
 	SDL_SetRenderDrawColor(currRenderer, 255, 255, 255, 255);
 	SDL_RenderClear(currRenderer);
 
+	// Render scene
+	currScene.render(currImage);
+
 	// Display image tex
 	currImage.handleDisplay();
 
@@ -89,4 +104,12 @@ void CApp::onExit() {
 	SDL_DestroyWindow(currWindow);
 	currWindow = NULL;
 	SDL_Quit();
+}
+
+// Debug printing for geometry
+void CApp::printVector(const qbVector<double>&inputVector) {
+	int numRows = inputVector.GetNumDims();
+	for (int row = 0; row < numRows; row++) {
+		std::cout << std::fixed << std::setprecision(3) << inputVector.GetElement(row) << std::endl;
+	}
 }

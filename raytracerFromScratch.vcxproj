@@ -147,13 +147,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="capp.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ray.cpp" />
+    <ClCompile Include="scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="camera.h" />
     <ClInclude Include="capp.h" />
-    <ClInclude Include="cimage.cpp" />
-    <ClInclude Include="cimage.h" />
+    <ClInclude Include="image.cpp" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="ray.h" />
+    <ClInclude Include="scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

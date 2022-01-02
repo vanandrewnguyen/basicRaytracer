@@ -21,16 +21,34 @@
     <ClCompile Include="capp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="capp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cimage.h">
+    <ClInclude Include="image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cimage.cpp">
+    <ClInclude Include="image.cpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

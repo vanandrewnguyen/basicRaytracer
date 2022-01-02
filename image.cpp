@@ -1,7 +1,10 @@
 #pragma once
-#include "cimage.h"
+#include "image.h"
 #include <fstream>
 
+// These are moved over to cimage.h
+
+/*
 // Constructor
 Image::Image() {
 	screenSizeX = 0;
@@ -118,4 +121,4 @@ void Image::initTex() {
 	screenTexture = SDL_CreateTextureFromSurface(screenRenderer, tempSurf);
 	SDL_FreeSurface(tempSurf);
 }
-
+*/

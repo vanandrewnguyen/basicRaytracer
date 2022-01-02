@@ -2,9 +2,10 @@
 #ifndef CAPP_H
 #define CAPP_H
 
-#include "cimage.h"
 #include <SDL.h>
-
+#include "image.h"
+#include "scene.h"
+#include "camera.h"
 
 class CApp {
 public:
@@ -20,8 +21,14 @@ public:
 	void onExit(); 
 
 private:
+	void printVector(const qbVector<double>& inputVector);
+
+private:
 	// Instance of Image class to store an image
 	Image currImage;
+
+	// Instance of Scene class
+	Scene currScene;
 
 	// SDL2 Variables
 	bool isRunning;
