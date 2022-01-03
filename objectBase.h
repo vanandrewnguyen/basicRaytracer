@@ -12,8 +12,8 @@ public:
 	virtual ~ObjectBase();
 
 	// Functions
-	virtual bool testIntersection(const Ray &castRay, qbVector<double> &intersectionPoint, 
-								  qbVector<double> &localNormal, qbVector<double> &localColour);
+	virtual bool testIntersection(const Ray& castRay, qbVector<double>& intersectionPoint,
+		qbVector<double>& localNormal, qbVector<double>& localColour);
 	bool isFloatCloseEnough(const double n1, const double n2);
 
 public:

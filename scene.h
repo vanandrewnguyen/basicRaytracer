@@ -6,6 +6,7 @@
 #include "image.h"
 #include "camera.h"
 #include "objectSphere.h"
+#include "pointLight.h"
 
 class Scene {
 public:
@@ -21,8 +22,11 @@ private:
 	// Members
 	Camera currCamera;
 
-	// Unit sphere test
-	ObjectSphere testSphere;
+	// List of objects in the scene (ptr to base class, vector acts as list)
+	std::vector<std::shared_ptr<ObjectBase>> objectList;
+
+	// List of lights in the scene
+	std::vector<std::shared_ptr<LightBase>> lightList;
 };
 
 #endif

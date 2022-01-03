@@ -16,6 +16,17 @@ bool ObjectSphere::testIntersection(const Ray& castRay, qbVector<double>& inters
 	// vector form, which can be simplified further.
 	// You end up with a quadratic formula.
 
+	/*
+	<x, y, z> = <px, py, pz> + <vx, vy, vz>
+	where x = p + t * v where t is a scalar
+	hence using the length formula we get x^2 + y^2 + z^2 = r^2 where x = p + t * v, y = ... etc
+	therefore, r^2 = (px + t*v)^2 + (py + t*v)^2 + (pz + t*v)^2
+	Solve for t.
+	By expanding and simplifying we rearrange to get 
+	t^2(v . v) + 2*t*(p . v) + (p . p) - r^2 = 0,
+	where this is a quadratic formula with a*t^2 + b*t + c = 0, where a, b, c = ... (compare coefficients)
+	*/
+
 	// Compute values of a, b, c
 	qbVector<double> vectorV = castRay.currVecAB;
 	vectorV.Normalize();
@@ -42,7 +53,11 @@ bool ObjectSphere::testIntersection(const Ray& castRay, qbVector<double>& inters
 			// Start point + direction vector * scale
 			intersectionPoint = ((termA < termB) ? castRay.currPointA + (vectorV * termA) : castRay.currPointA + (vectorV * termB));
 		}
-			
+		
+		// Compute surface normal
+		localNormal = intersectionPoint;
+		localNormal.Normalize();
+
 		return true;
 	} else {
 		return false;

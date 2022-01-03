@@ -8,6 +8,16 @@ Scene::Scene() {
 	currCamera.setHorSize(0.25);
 	currCamera.setAspect(16.0 / 9.0);
 	currCamera.updateCameraGeometry();
+
+	// Construct sphere (push back into list)
+	objectList.push_back(std::make_shared<ObjectSphere> (ObjectSphere()));
+
+	// Construct point light
+	lightList.push_back(std::make_shared<PointLight>(PointLight()));
+	// Move point light off the origin, and set colour
+	lightList.at(0)->lightLocation = qbVector<double>{ std::vector<double>{5.0, -10.0, -5.0} };
+	lightList.at(0)->lightColour = qbVector<double>{ std::vector<double>{255.0, 255.0, 255.0} };
+
 }
 
 // Render function
@@ -35,28 +45,44 @@ bool Scene::render(Image& outputImage) {
 			// Generate ray
 			currCamera.createRay(normX, normY, cameraRay);
 
-			// Test intersection
-			bool isIntersect = testSphere.testIntersection(cameraRay, intersectPoint, localNormal, localColour);
+			// Test for intersections with all objects in the scene (using loop, auto is meant to define the correct data type)
+			for (auto currentObject : objectList) {
+				bool isIntersect = currentObject->testIntersection(cameraRay, intersectPoint, localNormal, localColour);
+				// Output pixel colour 
+				if (isIntersect) {
+					// Compute intensity of light
+					double intensity;
+					bool validLight = false;
+					qbVector<double> colour{ 3 };
+					for (auto currentLight : lightList) {
+						validLight = currentLight->computeIlluminationContribution(intersectPoint, localNormal, objectList, currentObject, 
+							colour, intensity);
+					}
 
-			// Output pixel colour 
-			if (isIntersect) {	
-				double dist = (intersectPoint - cameraRay.currPointA).norm();
-				// Clamp distance
-				if (dist > maxDist) {
-					maxDist = dist;
+					// Compute dist between camera and intersection point
+					double dist = (intersectPoint - cameraRay.currPointA).norm();
+					// Clamp distance
+					if (dist > maxDist) {
+						maxDist = dist;
+					}
+					if (dist < minDist) {
+						minDist = dist;
+					}
+
+					// Display light
+					//outputImage.setPixel(x, y, 255.0 - (((dist - 9.0) / 0.94605) * 255.0), 0.0, 0.0);
+					if (validLight) {
+						outputImage.setPixel(x, y, 255.0 * intensity, 0.0, 0.0);
+					} else {
+						outputImage.setPixel(x, y, 0.0, 0.0, 0.0);
+					}
 				}
-				if (dist < minDist) {
-					minDist = dist;
+				else {
+					outputImage.setPixel(x, y, 0.0, 0.0, 0.0);
 				}
-				outputImage.setPixel(x, y, 255.0 - ((dist - 9.0) / 0.94605) * 255.0, 0.0, 0.0);
-			} else {
-				outputImage.setPixel(x, y, 0.0, 0.0, 0.0);
 			}
 		}
 	}
-
-	std::cout << "Minimum distance: " << minDist << std::endl;
-	std::cout << "Maximum distance: " << maxDist << std::endl;
 
 	/*
 	// Create colour gradient
