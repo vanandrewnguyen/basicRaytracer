@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="capp.cpp" />
+    <ClCompile Include="geometricTransform.cpp" />
     <ClCompile Include="lightBase.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="objectBase.cpp" />
@@ -160,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="capp.h" />
+    <ClInclude Include="geometricTransform.h" />
     <ClInclude Include="image.cpp" />
     <ClInclude Include="image.h" />
     <ClInclude Include="lightBase.h" />
