@@ -27,16 +27,22 @@ bool ObjectSphere::testIntersection(const Ray& castRay, qbVector<double>& inters
 	where this is a quadratic formula with a*t^2 + b*t + c = 0, where a, b, c = ... (compare coefficients)
 	*/
 
+	// Apply backwards transform to ray (translating world coord to local coord)
+	Ray backRay = transformMatrix.applyTransform(castRay, BCKTRANSFORM);
+
 	// Compute values of a, b, c
-	qbVector<double> vectorV = castRay.currVecAB;
+	qbVector<double> vectorV = backRay.currVecAB;
 	vectorV.Normalize();
 
 	// A
 	// A will always be of mag 1.0 as it is the squared mag of the casy ray, which is a unit vector.
 	// B
-	double b = 2.0 * qbVector<double>::dot(castRay.currPointA, vectorV);
+	double b = 2.0 * qbVector<double>::dot(backRay.currPointA, vectorV);
 	// C
-	double c = qbVector<double>::dot(castRay.currPointA, castRay.currPointA) - 1.0;
+	double c = qbVector<double>::dot(backRay.currPointA, backRay.currPointA) - 1.0;
+
+	// Gives point of intersection in the LOCAL COORDINATE SYSTEM NOT WORLD COORD
+	qbVector<double> pointOfIntersection;
 
 	// Test for intersection (this is the determinant, since if the quadratic doesn't exist then there is no intersection)
 	double intersectTest = (b * b) - 4.0 * c;
@@ -51,12 +57,20 @@ bool ObjectSphere::testIntersection(const Ray& castRay, qbVector<double>& inters
 		} else {
 			// Determine point of intersection (update pointer of intersectPoint)
 			// Start point + direction vector * scale
-			intersectionPoint = ((termA < termB) ? castRay.currPointA + (vectorV * termA) : castRay.currPointA + (vectorV * termB));
+			pointOfIntersection = ((termA < termB) ? backRay.currPointA + (vectorV * termA) : backRay.currPointA + (vectorV * termB));
+
+			// Transform poi back to world coord
+			intersectionPoint = transformMatrix.applyTransform(pointOfIntersection, FWDTRANSFORM);
+
+			// Compute surface normal
+			qbVector<double> objectOrigin = qbVector<double>{ std::vector<double>{0.0, 0.0, 0.0} };
+			qbVector<double> newObjectOrigin = transformMatrix.applyTransform(objectOrigin, FWDTRANSFORM);
+			localNormal = intersectionPoint - newObjectOrigin;
+			localNormal.Normalize();
+
+			// Return base colour
+			localColour = baseColour;
 		}
-		
-		// Compute surface normal
-		localNormal = intersectionPoint;
-		localNormal.Normalize();
 
 		return true;
 	} else {

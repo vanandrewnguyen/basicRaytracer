@@ -11,6 +11,26 @@ Scene::Scene() {
 
 	// Construct sphere (push back into list)
 	objectList.push_back(std::make_shared<ObjectSphere> (ObjectSphere()));
+	objectList.push_back(std::make_shared<ObjectSphere> (ObjectSphere()));
+	objectList.push_back(std::make_shared<ObjectSphere> (ObjectSphere()));
+
+	// Modify each sphere (using geometric transforms - translation, rotation, scaling)
+	GeometricTransform matrix1, matrix2, matrix3;
+	matrix1.setTransform(qbVector<double>{std::vector<double>{-1.5, 0.0, 0.0}}, 
+		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{0.5, 0.5, 0.75}});
+	matrix2.setTransform(qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{0.75, 0.5, 0.5}});
+	matrix3.setTransform(qbVector<double>{std::vector<double>{1.5, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{0.75, 0.75, 0.75}});
+	objectList.at(0)->setTransformMatrix(matrix1);
+	objectList.at(1)->setTransformMatrix(matrix2);
+	objectList.at(2)->setTransformMatrix(matrix3);
+	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{255.0, 153.0, 153.0} };
+	objectList.at(1)->baseColour = qbVector<double>{ std::vector<double>{51.0, 204.0, 255.0} };
+	objectList.at(2)->baseColour = qbVector<double>{ std::vector<double>{255.0, 153.0, 0.0} };
 
 	// Construct point light
 	lightList.push_back(std::make_shared<PointLight>(PointLight()));
@@ -72,13 +92,16 @@ bool Scene::render(Image& outputImage) {
 					// Display light
 					//outputImage.setPixel(x, y, 255.0 - (((dist - 9.0) / 0.94605) * 255.0), 0.0, 0.0);
 					if (validLight) {
-						outputImage.setPixel(x, y, 255.0 * intensity, 0.0, 0.0);
+						//outputImage.setPixel(x, y, 255.0 * intensity, 0.0, 0.0);
+						outputImage.setPixel(x, y, localColour.GetElement(0) * intensity, localColour.GetElement(1) * intensity, localColour.GetElement(2) * intensity);
 					} else {
-						outputImage.setPixel(x, y, 0.0, 0.0, 0.0);
+						// Leave pixel unchanged
+						//outputImage.setPixel(x, y, 0.0, 0.0, 0.0);
 					}
 				}
 				else {
-					outputImage.setPixel(x, y, 0.0, 0.0, 0.0);
+					// Leave pixel unchanged
+					//outputImage.setPixel(x, y, 0.0, 0.0, 0.0);
 				}
 			}
 		}

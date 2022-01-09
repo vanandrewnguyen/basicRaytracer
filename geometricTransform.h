@@ -17,7 +17,7 @@ public:
 	~GeometricTransform();
 
 	// Construct from pair of matrices
-	void GTForm(const qbMatrix2<double> &forward, const qbMatrix2<double> &backward);
+	GeometricTransform(const qbMatrix2<double> &forward, const qbMatrix2<double> &backward);
 
 	// Set translation, scale, rotation
 	void setTransform(const qbVector<double>& translation, const qbVector<double>& scale, const qbVector<double>& rotation);
@@ -37,7 +37,7 @@ public:
 	GeometricTransform operator = (const GeometricTransform& rhs);
 
 	// Print transform matrix to STDOUT
-	void printMatrix(bool dirFlag);
+	void printMatrix(bool directionFlag);
 
 	// Allow printing of vectors
 	static void printVector(const qbVector<double>& vector);

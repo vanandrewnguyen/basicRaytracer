@@ -551,8 +551,9 @@ qbMatrix2<T> qbMatrix2<T>::operator= (const qbMatrix2<T> &rhs)
 		for (int i=0; i<m_nElements; i++)
 			m_matrixData[i] = rhs.m_matrixData[i];	
 			
-		return *this;
 	}
+
+	return *this;
 }
 
 /* **************************************************************************************************

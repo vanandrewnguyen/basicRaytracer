@@ -22,3 +22,8 @@ bool ObjectBase::testIntersection(const Ray& castRay, qbVector<double>& intersec
 bool ObjectBase::isFloatCloseEnough(const double n1, const double n2) {
 	return fabs(n1 - n2) < EPSILON;
 }
+
+// Set the transform matrix of the object
+void ObjectBase::setTransformMatrix(const GeometricTransform& inputTransformMatrix) {
+	transformMatrix = inputTransformMatrix;
+}

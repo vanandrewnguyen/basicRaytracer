@@ -2,6 +2,7 @@
 #define OBJECTSPHERE_H
 
 #include "objectBase.h"
+#include "geometricTransform.h"
 
 // This class inherits from Object Base
 class ObjectSphere : public ObjectBase {
@@ -12,7 +13,7 @@ public:
 
 	// Functions
 	virtual bool testIntersection(const Ray& castRay, qbVector<double>& intersectionPoint,
-		qbVector<double>& localNormal, qbVector<double>& localColour);
+		qbVector<double>& localNormal, qbVector<double>& localColour) override;
 
 private:
 

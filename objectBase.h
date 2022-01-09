@@ -3,6 +3,7 @@
 
 #include "qbLinAlg/qbVector.h"
 #include "ray.h"
+#include "geometricTransform.h"
 
 // This is a base class of every 3D object, which will have elements that are inherited.
 class ObjectBase {
@@ -15,9 +16,11 @@ public:
 	virtual bool testIntersection(const Ray& castRay, qbVector<double>& intersectionPoint,
 		qbVector<double>& localNormal, qbVector<double>& localColour);
 	bool isFloatCloseEnough(const double n1, const double n2);
+	void setTransformMatrix(const GeometricTransform &inputTransformMatrix);
 
 public:
 	qbVector<double> baseColour{ 3 };
+	GeometricTransform transformMatrix;
 };
 
 #endif
