@@ -22,7 +22,7 @@ GeometricTransform::GeometricTransform(const qbMatrix2<double>& forward, const q
 
 }
 
-void GeometricTransform::setTransform(const qbVector<double>& translation, const qbVector<double>& scale, const qbVector<double>& rotation) {
+void GeometricTransform::setTransform(const qbVector<double>& translation, const qbVector<double>& rotation, const qbVector<double>& scale) {
 	// Define matrix for each component of the transform
 	qbMatrix2<double> translationMatrix{ 4,4 };
 	qbMatrix2<double> rotationMatrixX{ 4,4 };
@@ -109,7 +109,7 @@ Ray GeometricTransform::applyTransform(const Ray& inputRay, bool directionFlag) 
 	// Create output
 	Ray outputRay;
 	// Use forward / backwards transform
-	// this is a pointer to all member functions, the object is referencing its own address
+	// 'this' is a pointer to all member functions, the object is referencing its own address
 	outputRay.currPointA = this->applyTransform(inputRay.currPointA, (directionFlag) ? FWDTRANSFORM : BCKTRANSFORM);
 	outputRay.currPointB = this->applyTransform(inputRay.currPointB, (directionFlag) ? FWDTRANSFORM : BCKTRANSFORM);
 	outputRay.currVecAB = outputRay.currPointB - outputRay.currPointA;
@@ -131,6 +131,7 @@ qbVector<double> GeometricTransform::applyTransform(const qbVector<double>& inpu
 	return outputVector;
 }
 
+// Overloading basic operators
 GeometricTransform operator* (const GeometricTransform& lhs, const GeometricTransform& rhs) {
 	// Get product of the two forward transforms (left and right matrices)
 	qbMatrix2<double> forwardResult = lhs.forwardTransform * rhs.forwardTransform;
@@ -145,7 +146,7 @@ GeometricTransform operator* (const GeometricTransform& lhs, const GeometricTran
 }
 
 // Overload assignment operator
-GeometricTransform GeometricTransform::operator = (const GeometricTransform& rhs) {
+GeometricTransform GeometricTransform::operator= (const GeometricTransform &rhs) {
 	// Make sure we are not assigning to self
 	if (this != &rhs) {
 		forwardTransform = rhs.forwardTransform;

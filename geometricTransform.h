@@ -20,7 +20,7 @@ public:
 	GeometricTransform(const qbMatrix2<double> &forward, const qbMatrix2<double> &backward);
 
 	// Set translation, scale, rotation
-	void setTransform(const qbVector<double>& translation, const qbVector<double>& scale, const qbVector<double>& rotation);
+	void setTransform(const qbVector<double>& translation, const qbVector<double>& rotation, const qbVector<double>& scale);
 
 	// Getter for transform matrices
 	qbMatrix2<double> getForwardMatrix();
@@ -34,7 +34,7 @@ public:
 	// Define as friend meaning it has access to class's private members
 	friend GeometricTransform operator* (const GeometricTransform &lhs, const GeometricTransform &rhs);
 	// Overload assignment operator
-	GeometricTransform operator = (const GeometricTransform& rhs);
+	GeometricTransform operator= (const GeometricTransform& rhs);
 
 	// Print transform matrix to STDOUT
 	void printMatrix(bool directionFlag);

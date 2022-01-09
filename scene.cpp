@@ -16,6 +16,7 @@ Scene::Scene() {
 
 	// Modify each sphere (using geometric transforms - translation, rotation, scaling)
 	GeometricTransform matrix1, matrix2, matrix3;
+	
 	matrix1.setTransform(qbVector<double>{std::vector<double>{-1.5, 0.0, 0.0}}, 
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
 		qbVector<double>{std::vector<double>{0.5, 0.5, 0.75}});
@@ -25,6 +26,7 @@ Scene::Scene() {
 	matrix3.setTransform(qbVector<double>{std::vector<double>{1.5, 0.0, 0.0}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
 		qbVector<double>{std::vector<double>{0.75, 0.75, 0.75}});
+
 	objectList.at(0)->setTransformMatrix(matrix1);
 	objectList.at(1)->setTransformMatrix(matrix2);
 	objectList.at(2)->setTransformMatrix(matrix3);

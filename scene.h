@@ -7,7 +7,6 @@
 #include "camera.h"
 #include "objectSphere.h"
 #include "pointLight.h"
-#include "geometricTransform.h"
 
 class Scene {
 public:
