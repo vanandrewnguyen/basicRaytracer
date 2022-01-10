@@ -52,6 +52,9 @@ public:
 		screenBChannel.at(x).at(y) = b;
 	}
 	void handleDisplay() {
+		// Compute max values
+		computeMaxValue();
+
 		// Allocate mem for pixel buffer
 		Uint32* tempPixelBuffer = new Uint32[screenSizeX * screenSizeY];
 		// Clear
@@ -97,9 +100,10 @@ public:
 private:
 	Uint32 convertColour(const double r, const double g, const double b) {
 		// Type cast to convert data types
-		unsigned char red = static_cast<unsigned char>(r);
-		unsigned char green = static_cast<unsigned char>(g);
-		unsigned char blue = static_cast<unsigned char>(b);
+		// We get the rgb inputs but we have to convert it to the full range of colour -> by dividing by total max and extrapolating to 255
+		unsigned char red = static_cast<unsigned char>((r / totalMax) * 255.0);
+		unsigned char green = static_cast<unsigned char>((g / totalMax) * 255.0);
+		unsigned char blue = static_cast<unsigned char>((b / totalMax) * 255.0);
 
 		Uint32 pixelColour;
 		#if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -138,6 +142,43 @@ private:
 		SDL_FreeSurface(tempSurf);
 	}
 
+	// Compute max values of colour
+	void computeMaxValue() {
+		maxRed = 0.0;
+		maxGreen = 0.0;
+		maxBlue = 0.0;
+		totalMax = 0.0;
+		for (int x = 0; x < screenSizeX; ++x) {
+			for (int y = 0; y < screenSizeY; ++y) {
+				double redVal = screenRChannel.at(x).at(y);
+				double blueVal = screenGChannel.at(x).at(y);
+				double greenVal = screenBChannel.at(x).at(y);
+
+				// Get new max
+				if (redVal > maxRed) {
+					maxRed = redVal;
+				}
+				if (blueVal > maxBlue) {
+					maxBlue = blueVal;
+				}
+				if (greenVal > maxGreen) {
+					maxGreen = greenVal;
+				}
+
+				// Set new total max
+				if (maxRed > totalMax) {
+					totalMax = maxRed;
+				}
+				if (maxGreen > totalMax) {
+					totalMax = maxGreen;
+				}
+				if (maxBlue > totalMax) {
+					totalMax = maxBlue;
+				}
+			}
+		}
+	}
+
 private:
 	// Init vector of vectors of doubles for rgb channels (2d array to store data)
 	// We are using Uint32 for each pixel, because we assign 32 bits of data per pixel
@@ -147,6 +188,9 @@ private:
 
 	// Store dimension of image
 	int screenSizeX, screenSizeY;
+
+	// Store max values
+	double maxRed, maxGreen, maxBlue, totalMax;
 
 	// SDL2
 	SDL_Renderer* screenRenderer;

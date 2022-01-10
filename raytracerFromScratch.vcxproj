@@ -153,6 +153,7 @@
     <ClCompile Include="lightBase.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="objectBase.cpp" />
+    <ClCompile Include="objectPlane.cpp" />
     <ClCompile Include="objectSphere.cpp" />
     <ClCompile Include="pointLight.cpp" />
     <ClCompile Include="ray.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="image.h" />
     <ClInclude Include="lightBase.h" />
     <ClInclude Include="objectBase.h" />
+    <ClInclude Include="objectPlane.h" />
     <ClInclude Include="objectSphere.h" />
     <ClInclude Include="pointLight.h" />
     <ClInclude Include="ray.h" />
