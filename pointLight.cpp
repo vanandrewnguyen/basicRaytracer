@@ -24,6 +24,52 @@ bool PointLight::computeIlluminationContribution(const qbVector<double>& interse
 	// Compute start
 	qbVector<double> pointStart = intersectPoint;
 	
+	// Construct a ray from point of intersection to the light
+	Ray lightRay(pointStart, pointStart + lightDir);
+
+	// Check for intersections with all of the objects in scene, except for current one
+	qbVector<double> pointOfIntersection{ 3 };
+	qbVector<double> pointOfIntersectionNormal{ 3 };
+	qbVector<double> pointOfIntersectionColour{ 3 };
+	bool validInt = false;
+	for (auto sceneObject : objectList) {
+		if (sceneObject != currentObject) {
+			validInt = sceneObject->testIntersection(lightRay, pointOfIntersection, pointOfIntersectionNormal, pointOfIntersectionColour);
+		}
+		// If we have a valid intersection, break. Since the object is blocking light.
+		if (validInt) {
+			break;
+		}
+	}
+
+	// Continue computing if light ray did not intersection with any objects
+	if (!validInt) {
+		// Compute angle between surface normal and light vector
+		// Assume normal is a unit vector
+		double angle = acos(qbVector<double>::dot(localNormal, lightDir));
+		if (angle > PI / 2.0) {
+			// No light reaches since normal is pointing away from light source
+			colour = lightColour;
+			intensity = 0.0;
+			return false;
+		}
+		else {
+			// Compute light
+			colour = lightColour;
+			intensity = lightIntensity * (1.0 - (angle / (PI / 2.0)));
+			return true;
+		}
+	} else {
+		// We are in shadow
+		colour = lightColour;
+		intensity = 0.0;
+		return false;
+	}
+
+	return true;
+}
+
+/*
 	// Compute angle between surface normal and light vector
 	// Assume normal is a unit vector
 	double angle = acos(qbVector<double>::dot(localNormal, lightDir));
@@ -38,4 +84,4 @@ bool PointLight::computeIlluminationContribution(const qbVector<double>& interse
 		intensity = lightIntensity * (1.0 - (angle / (PI / 2.0)));
 		return true;
 	}
-}
+*/
