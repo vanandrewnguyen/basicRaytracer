@@ -1,9 +1,16 @@
 #include "scene.h"
 #include "materialBase.h"
+#include "simpleMaterial.h"
 
 #define PI 3.1416
 
 Scene::Scene() {
+	// MATERIALS //
+	auto material1 = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	material1->baseColour = qbVector<double>{ std::vector<double>{0.25, 0.5, 0.8} };
+	material1->reflectivity = 0.5;
+	material1->shininess = 10.0;
+
 	// CAMERA //
 	// Set parameters
 	currCamera.setPos(qbVector<double>{std::vector<double>{0.0, -10.0, 0.0}});
@@ -68,6 +75,7 @@ Scene::Scene() {
 		qbVector<double>{std::vector<double>{0.25, 0.25, 0.25}});
 	objectList.at(0)->setTransformMatrix(matrixSphere1);
 	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
+	objectList.at(0)->assignMaterial(material1);
 
 	// LIGHTING //
 	// Construct point light
