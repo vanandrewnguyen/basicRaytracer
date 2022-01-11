@@ -9,6 +9,11 @@ Link to the tutorial: https://github.com/QuantitativeBytes/qbRayTrace
 
 Features:
 - Basic spheres and planes support
-- Basic lambertian diffuse lighting
+- Basic phong lighting
 - Geometric transformations using translation, rotation and scaling matrices
 - Moveable camera system
+- Material support
+- Refections
+
+Example image:
+![reflections-export](https://user-images.githubusercontent.com/53636492/149031954-15a2ffe1-8df9-4b7c-81b8-c6cba5974f8e.png)
