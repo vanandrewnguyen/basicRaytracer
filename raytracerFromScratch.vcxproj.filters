@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Primatives">
+      <UniqueIdentifier>{e05f07fc-7c7e-4028-953d-e36b4c71574c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lights">
+      <UniqueIdentifier>{7e7f9d2c-b8f2-48c2-82cb-ea70d94103a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Materials">
+      <UniqueIdentifier>{49b7b153-a4a0-4339-8181-ed4171c7bab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lights">
+      <UniqueIdentifier>{6995d709-3a1f-4d5f-bcab-846d476db8e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Materials">
+      <UniqueIdentifier>{4af6afca-26f7-438f-8bdf-c0257b272938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Primatives">
+      <UniqueIdentifier>{586f0d1e-45e7-470c-bfc4-accf580713df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,23 +48,26 @@
     <ClCompile Include="camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="objectBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="objectSphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lightBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pointLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="geometricTransform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="objectBase.cpp">
+      <Filter>Source Files\Primatives</Filter>
+    </ClCompile>
     <ClCompile Include="objectPlane.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Primatives</Filter>
+    </ClCompile>
+    <ClCompile Include="objectSphere.cpp">
+      <Filter>Source Files\Primatives</Filter>
+    </ClCompile>
+    <ClCompile Include="pointLight.cpp">
+      <Filter>Source Files\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="lightBase.cpp">
+      <Filter>Source Files\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="materialBase.cpp">
+      <Filter>Source Files\Materials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,23 +89,26 @@
     <ClInclude Include="camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="objectBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="objectSphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lightBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pointLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="geometricTransform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="objectBase.h">
+      <Filter>Header Files\Primatives</Filter>
+    </ClInclude>
     <ClInclude Include="objectPlane.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Primatives</Filter>
+    </ClInclude>
+    <ClInclude Include="objectSphere.h">
+      <Filter>Header Files\Primatives</Filter>
+    </ClInclude>
+    <ClInclude Include="pointLight.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="lightBase.h">
+      <Filter>Header Files\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="materialBase.h">
+      <Filter>Header Files\Materials</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

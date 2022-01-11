@@ -27,3 +27,10 @@ bool ObjectBase::isFloatCloseEnough(const double n1, const double n2) {
 void ObjectBase::setTransformMatrix(const GeometricTransform& inputTransformMatrix) {
 	transformMatrix = inputTransformMatrix;
 }
+
+// Assign a material to the object
+bool ObjectBase::assignMaterial(const std::shared_ptr<MaterialBase>& inputObjectMaterial) {
+	objectMaterial = inputObjectMaterial;
+	hasMaterial = true;
+	return true;
+}

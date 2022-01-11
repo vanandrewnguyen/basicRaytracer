@@ -1,6 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <memory>
 #include <vector>
 #include <SDL.h>
 #include "image.h"
@@ -15,6 +16,8 @@ public:
 
 	// Functions
 	bool render(Image& outputImage);	
+	bool castRay(Ray &castRay, std::shared_ptr<ObjectBase> &closestObject, qbVector<double> &closestIntersectionPoint, 
+		qbVector<double>& closestLocalNormal, qbVector<double>& closestLocalColour);
 
 private:
 	// Functions
