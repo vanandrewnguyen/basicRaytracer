@@ -55,23 +55,23 @@ bool PointLight::computeIlluminationContribution(const qbVector<double>& interse
 		// Compute angle between surface normal and light vector
 		// Assume normal is a unit vector
 		double angle = acos(qbVector<double>::dot(localNormal, lightDir));
-		if (angle > PI / 2.0) {
+		if (angle > (PI / 2.0)) {
 			// No light reaches since normal is pointing away from light source
 			colour = lightColour;
 			intensity = 0.0;
 			return false;
-		}
-		else {
+		} else {
 			// Compute light
 			colour = lightColour;
 			intensity = lightIntensity * (1.0 - (angle / (PI / 2.0)));
 			return true;
 		}
 	} else {
+		double angle = acos(qbVector<double>::dot(localNormal, lightDir));
 		// We are in shadow
 		colour = lightColour;
-		intensity = 0.0;
-		return false;
+		intensity = lightIntensity * (1.0 - (angle / (PI / 2.0))); //0.0;
+		return true; //false;
 	}
 
 	return true;

@@ -10,6 +10,7 @@
 #include "pointLight.h"
 #include "objectPlane.h"
 #include "objectCylinder.h"
+#include "objectCone.h"
 
 class Scene {
 public:

@@ -38,13 +38,13 @@ Scene::Scene() {
 	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
 	objectList.at(0)->assignMaterial(material1); */
 
-	objectList.push_back(std::make_shared<ObjectCylinder>(ObjectCylinder()));
+	objectList.push_back(std::make_shared<ObjectCone>(ObjectCone()));
 	matrixCylinder1.setTransform(qbVector<double>{std::vector<double>{0.5, 0.0, 0.5}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
 		qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}});
 	objectList.at(0)->setTransformMatrix(matrixCylinder1);
 	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	objectList.at(0)->assignMaterial(material1);
+	//objectList.at(0)->assignMaterial(material1);
 
 	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
 	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.6}},
@@ -52,7 +52,7 @@ Scene::Scene() {
 		qbVector<double>{std::vector<double>{0.4, 0.4, 0.4}});
 	objectList.at(1)->setTransformMatrix(matrixSphere1);
 	objectList.at(1)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	objectList.at(1)->assignMaterial(material2);
+	objectList.at(1)->assignMaterial(material1);
 
 	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
 	matrixPlaneFloor.setTransform(qbVector<double>{std::vector<double>{0.0, 0.0, 1.0}},
@@ -125,7 +125,7 @@ Scene::Scene() {
 	// Construct point light
 	lightList.push_back(std::make_shared<PointLight>(PointLight()));
 	// Move point light off the origin, and set colour
-	lightList.at(0)->lightLocation = qbVector<double>{ std::vector<double>{0.0, -2.0, -0.8} };
+	lightList.at(0)->lightLocation = qbVector<double>{ std::vector<double>{0.0, -2.0, -1.0} }; 
 	lightList.at(0)->lightColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
 
 }
@@ -200,7 +200,7 @@ bool Scene::castRay(Ray& castRay, std::shared_ptr<ObjectBase>& closestObject, qb
 			intersectionFound = true;
 
 			// Compute distance between camera and point of intersection
-			double dist = (closestIntersectionPoint - castRay.currPointA).norm(); // measure the distance, if it is less than any other then we keep reference
+			double dist = (intersectionPoint - castRay.currPointA).norm(); // measure the distance, if it is less than any other then we keep reference
 
 			// If this object is closer to the camera, store a reference 
 			if (dist < minDist) {
