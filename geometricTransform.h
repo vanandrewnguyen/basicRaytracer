@@ -16,6 +16,9 @@ public:
 	GeometricTransform();
 	~GeometricTransform();
 
+	// Construct from 3 vec
+	GeometricTransform(const qbVector<double> &translation, const qbVector<double>& rotation, const qbVector<double>& scale);
+
 	// Construct from pair of matrices
 	GeometricTransform(const qbMatrix2<double> &forward, const qbMatrix2<double> &backward);
 

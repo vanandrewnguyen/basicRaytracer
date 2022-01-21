@@ -1,7 +1,8 @@
 #include "materialBase.h"
 
 MaterialBase::MaterialBase() {
-
+	maxReflRays = 3;
+	reflRayCount = 0;
 }
 
 MaterialBase::~MaterialBase() {
@@ -51,6 +52,48 @@ qbVector<double> MaterialBase::computeDiffuseColour(const std::vector<std::share
 	
 	// Return mat col
 	return difCol;
+}
+
+qbVector<double> MaterialBase::computeReflectionColour(const std::vector<std::shared_ptr<ObjectBase>>& objectList,
+	const std::vector<std::shared_ptr<LightBase>>& lightList, const std::shared_ptr<ObjectBase>& currentObject,
+	const qbVector<double>& intersectionPoint, const qbVector<double>& localNormal, const Ray& incidentRay) {
+	qbVector<double> reflColour{ 3 };
+
+	// Compute refl vector
+	qbVector<double> d = incidentRay.currVecAB;
+	qbVector<double> reflVector = d - (2 * qbVector<double>::dot(d, localNormal) * localNormal); // same as reflect in glsl
+
+	// Construct refl ray
+	Ray reflRay(intersectionPoint, intersectionPoint + reflVector);
+
+	// Cast ray into scene and find closest object
+	std::shared_ptr<ObjectBase> closestObject;
+	qbVector<double> closestIntersectionPoint{ 3 };
+	qbVector<double> closestLocalNormal{ 3 };
+	qbVector<double> closestLocalColour{ 3 };
+	bool intersectionFound = castRay(reflRay, objectList, currentObject, closestObject, closestIntersectionPoint, 
+		closestLocalNormal, closestLocalColour);
+
+	// Compute light for closest object 
+	qbVector<double> matColour{ 3 };
+	if ((intersectionFound) && (reflRayCount < maxReflRays)) {
+		reflRayCount++;
+		if (closestObject->hasMaterial) {
+			// Use material to get colour
+			matColour = closestObject->objectMaterial->computeColour(objectList, lightList, closestObject, closestIntersectionPoint,
+				closestLocalNormal, reflRay);
+		} else {
+			// Just use base colour with diffuse
+			matColour = MaterialBase::computeDiffuseColour(objectList, lightList, closestObject, closestIntersectionPoint,
+				closestLocalNormal, closestLocalColour);
+		}
+	}
+	else {
+		// Leave mat colour as is, since our refl ray hit nothing
+	}
+
+	reflColour = matColour;
+	return reflColour;
 }
 
 bool MaterialBase::castRay(const Ray& castRay, const std::vector<std::shared_ptr<ObjectBase>>& objectList,

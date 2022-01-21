@@ -23,10 +23,14 @@ public:
 	bool castRay(const Ray &castRay, const std::vector<std::shared_ptr<ObjectBase>> &objectList, 
 		const std::shared_ptr<ObjectBase> &thisObject, std::shared_ptr<ObjectBase> &closestObject, qbVector<double> &closestIntersectionPoint,
 		qbVector<double>& closestLocalNormal, qbVector<double>& closestLocalColour);
+	qbVector<double> computeReflectionColour(const std::vector<std::shared_ptr<ObjectBase>>& objectList,
+		const std::vector<std::shared_ptr<LightBase>>& lightList, const std::shared_ptr<ObjectBase>& currentObject,
+		const qbVector<double>& intersectionPoint, const qbVector<double>& localNormal, const Ray& incidentRay);
 
 public:
-	
-
+	// Counter for reflections
+	inline static int maxReflRays; // inline static means one instance of each variable regardless of how many materialBase instances there are
+	inline static int reflRayCount;
 };
 
 

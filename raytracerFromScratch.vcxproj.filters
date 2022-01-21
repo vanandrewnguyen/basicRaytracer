@@ -72,6 +72,12 @@
     <ClCompile Include="simpleMaterial.cpp">
       <Filter>Source Files\Materials</Filter>
     </ClCompile>
+    <ClCompile Include="objectCylinder.cpp">
+      <Filter>Source Files\Primatives</Filter>
+    </ClCompile>
+    <ClCompile Include="objectCone.cpp">
+      <Filter>Source Files\Primatives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="capp.h">
@@ -115,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="simpleMaterial.h">
       <Filter>Header Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="objectCone.h">
+      <Filter>Header Files\Primatives</Filter>
+    </ClInclude>
+    <ClInclude Include="objectCylinder.h">
+      <Filter>Header Files\Primatives</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,6 +10,10 @@ GeometricTransform::~GeometricTransform() {
 
 }
 
+GeometricTransform::GeometricTransform(const qbVector<double>& translation, const qbVector<double>& rotation, const qbVector<double>& scale) {
+	setTransform(translation, rotation, scale);
+}
+
 GeometricTransform::GeometricTransform(const qbMatrix2<double>& forward, const qbMatrix2<double>& backward) {
 	// Check inputs are 4x4 matrices (transformation + translation, translation is the last column)
 	if ((forward.GetNumRows() != 4) || (backward.GetNumRows() != 4) || (forward.GetNumCols() != 4) || (backward.GetNumCols() != 4)) {
@@ -92,7 +96,7 @@ void GeometricTransform::setTransform(const qbVector<double>& translation, const
 	scaleMatrix.SetElement(2, 2, scale.GetElement(2));
 
 	// Multiply all matrices to give final forward matrix (since matrices add values on multiplication)
-	forwardTransform = translationMatrix * scaleMatrix * rotationMatrixX * rotationMatrixY * rotationMatrixZ;
+	forwardTransform = translationMatrix * rotationMatrixX * rotationMatrixY * rotationMatrixZ * scaleMatrix;
 	backwardTransform = forwardTransform;
 	backwardTransform.Inverse(); // we can inverse a matrix to get one that points in the opposite direction, like a negative vector
 }

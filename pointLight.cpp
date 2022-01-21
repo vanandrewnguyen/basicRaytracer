@@ -20,6 +20,7 @@ bool PointLight::computeIlluminationContribution(const qbVector<double>& interse
 	*/
 	// Construct vector moving away from intersection point
 	qbVector<double> lightDir = (lightLocation - intersectPoint).Normalized();
+	double lightDist = (lightLocation - intersectPoint).norm();
 
 	// Compute start
 	qbVector<double> pointStart = intersectPoint;
@@ -35,6 +36,13 @@ bool PointLight::computeIlluminationContribution(const qbVector<double>& interse
 	for (auto sceneObject : objectList) {
 		if (sceneObject != currentObject) {
 			validInt = sceneObject->testIntersection(lightRay, pointOfIntersection, pointOfIntersectionNormal, pointOfIntersectionColour);
+			// If distance to current object and poi of object tested lies between current obj and light, cast shadow. Else forget it.
+			if (validInt) {
+				double dist = (pointOfIntersection - pointStart).norm();
+				if (dist > lightDist) {
+					validInt = false;
+				}
+			}
 		}
 		// If we have a valid intersection, break. Since the object is blocking light.
 		if (validInt) {

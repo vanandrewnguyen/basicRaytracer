@@ -92,6 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,6 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,6 +156,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="materialBase.cpp" />
     <ClCompile Include="objectBase.cpp" />
+    <ClCompile Include="objectCone.cpp" />
+    <ClCompile Include="objectCylinder.cpp" />
     <ClCompile Include="objectPlane.cpp" />
     <ClCompile Include="objectSphere.cpp" />
     <ClCompile Include="pointLight.cpp" />
@@ -170,6 +174,8 @@
     <ClInclude Include="lightBase.h" />
     <ClInclude Include="materialBase.h" />
     <ClInclude Include="objectBase.h" />
+    <ClInclude Include="objectCone.h" />
+    <ClInclude Include="objectCylinder.h" />
     <ClInclude Include="objectPlane.h" />
     <ClInclude Include="objectSphere.h" />
     <ClInclude Include="pointLight.h" />

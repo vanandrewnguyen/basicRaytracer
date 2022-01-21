@@ -23,13 +23,22 @@ qbVector<double> SimpleMaterial::computeColour(const std::vector<std::shared_ptr
 	// Compute diffuse light
 	diffColour = computeDiffuseColour(objectList, lightList, currentObject, intersectionPoint, localNormal, baseColour);
 
+	// Compute reflections!
+	if (reflectivity > 0.0) {
+		reflColour = computeReflectionColour(objectList, lightList, currentObject, intersectionPoint, localNormal, cameraRay);
+	}
+
+	// Combine reflection with diffuse -> the more reflective a material is, the more it loses its base colour
+	matColour = (reflColour * reflectivity) + (diffColour * (1 - reflectivity));
+
 	// Compute specular light
 	if (shininess > 0.0) {
 		specColour = computeSpecularColour(objectList, lightList, intersectionPoint, localNormal, cameraRay);
 	}
 
 	// Final output
-	matColour = diffColour + specColour;
+	matColour = matColour + specColour; // spec doesn't need to be affected by reflections
+	// also += doesn't work, qbVector overrides vector arithmetic 
 	return matColour;
 }
 
