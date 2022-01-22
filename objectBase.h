@@ -28,6 +28,7 @@ public:
 	GeometricTransform transformMatrix;
 	std::shared_ptr<MaterialBase> objectMaterial;
 	bool hasMaterial = false;
+	qbVector<double> uvCoords{ 2 };
 };
 
 #endif

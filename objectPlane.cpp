@@ -46,6 +46,11 @@ bool ObjectPlane::testIntersection(const Ray& castRay, qbVector<double>& interse
 				localNormal.Normalize();
 
 				localColour = baseColour;
+
+				// Store UV coords
+				uvCoords.SetElement(0, u);
+				uvCoords.SetElement(1, v);
+
 				return true;
 			} else {
 				return false;

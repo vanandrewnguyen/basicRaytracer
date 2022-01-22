@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Primatives">
       <UniqueIdentifier>{586f0d1e-45e7-470c-bfc4-accf580713df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Textures">
+      <UniqueIdentifier>{c2e426f2-25ed-4bd1-905e-6c619ba2038c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Textures">
+      <UniqueIdentifier>{a9a55ea0-3a39-4365-866c-cb7557836861}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +83,12 @@
     </ClCompile>
     <ClCompile Include="objectCone.cpp">
       <Filter>Source Files\Primatives</Filter>
+    </ClCompile>
+    <ClCompile Include="objectCube.cpp">
+      <Filter>Source Files\Primatives</Filter>
+    </ClCompile>
+    <ClCompile Include="textureBase.cpp">
+      <Filter>Source Files\Textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="objectCylinder.h">
       <Filter>Header Files\Primatives</Filter>
+    </ClInclude>
+    <ClInclude Include="objectCube.h">
+      <Filter>Header Files\Primatives</Filter>
+    </ClInclude>
+    <ClInclude Include="textureBase.h">
+      <Filter>Header Files\Textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

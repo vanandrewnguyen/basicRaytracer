@@ -157,6 +157,7 @@
     <ClCompile Include="materialBase.cpp" />
     <ClCompile Include="objectBase.cpp" />
     <ClCompile Include="objectCone.cpp" />
+    <ClCompile Include="objectCube.cpp" />
     <ClCompile Include="objectCylinder.cpp" />
     <ClCompile Include="objectPlane.cpp" />
     <ClCompile Include="objectSphere.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="ray.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="simpleMaterial.cpp" />
+    <ClCompile Include="textureBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
@@ -175,6 +177,7 @@
     <ClInclude Include="materialBase.h" />
     <ClInclude Include="objectBase.h" />
     <ClInclude Include="objectCone.h" />
+    <ClInclude Include="objectCube.h" />
     <ClInclude Include="objectCylinder.h" />
     <ClInclude Include="objectPlane.h" />
     <ClInclude Include="objectSphere.h" />
@@ -182,6 +185,7 @@
     <ClInclude Include="ray.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="simpleMaterial.h" />
+    <ClInclude Include="textureBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

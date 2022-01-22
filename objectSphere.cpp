@@ -1,6 +1,8 @@
 #include "objectSphere.h"
 #include <cmath>
 
+#define PI 3.1416
+
 // Constructor destructor
 ObjectSphere::ObjectSphere() {
 
@@ -70,6 +72,21 @@ bool ObjectSphere::testIntersection(const Ray& castRay, qbVector<double>& inters
 
 			// Return base colour
 			localColour = baseColour;
+
+			// Compute u and v, then store uv coords
+			double x = pointOfIntersection.GetElement(0);
+			double y = pointOfIntersection.GetElement(1);
+			double z = pointOfIntersection.GetElement(2);
+			double u = atan(sqrtf(pow(x, 2.0) + pow(y, 2.0)) / z);
+			double v = atan(y / x);
+			if (x < 0) {
+				v += PI;
+			}
+			// Correct ratio
+			u /= PI; 
+			v /= PI;
+			uvCoords.SetElement(0, u);
+			uvCoords.SetElement(1, v);	
 		}
 
 		return true;

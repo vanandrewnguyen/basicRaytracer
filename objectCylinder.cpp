@@ -3,6 +3,7 @@
 #include <array>
 
 #define BIGNUMBER 100e6
+#define PI 3.1416
 
 ObjectCylinder::ObjectCylinder() {
 
@@ -128,7 +129,8 @@ bool ObjectCylinder::testIntersection(const Ray& castRay, qbVector<double>& inte
 	// If minIndex == 0 || 1, then we have valid intersection with cylinder
 	qbVector<double> validPoi = poi.at(minIndex);
 	if (minIndex < 2) {
-		// Transfirm int point back to world coord by using transform
+		// CURVED SURFACE
+		// Transform int point back to world coord by using transform
 		intersectionPoint = transformMatrix.applyTransform(validPoi, FWDTRANSFORM);
 
 		// Get local normal
@@ -145,9 +147,19 @@ bool ObjectCylinder::testIntersection(const Ray& castRay, qbVector<double>& inte
 
 		// Return base colour
 		localColour = baseColour;
+
+		// Compute u and v, then store uv coords
+		double x = validPoi.GetElement(0);
+		double y = validPoi.GetElement(1);
+		double z = validPoi.GetElement(2);
+		double u = atan2(y, x) / PI;
+		double v = z;
+		uvCoords.SetElement(0, u);
+		uvCoords.SetElement(1, v);
+
 		return true;
 	} else {
-		// Otherwise check end caps
+		// Otherwise check END CAPS
 		if (!isFloatCloseEnough(v.GetElement(2), 0.0)) {
 			// Check if inside disk (this is x^2 + y^2 < r^2, since unit cylinder)
 			if (sqrtf(std::pow(validPoi.GetElement(0), 2.0) + std::pow(validPoi.GetElement(1), 2.0)) < 1.0) {
@@ -163,6 +175,13 @@ bool ObjectCylinder::testIntersection(const Ray& castRay, qbVector<double>& inte
 
 				// Return base colour
 				localColour = baseColour;
+
+				double x = validPoi.GetElement(0);
+				double y = validPoi.GetElement(1);
+				double z = validPoi.GetElement(2);
+				uvCoords.SetElement(0, x);
+				uvCoords.SetElement(1, y);
+
 				return true;
 			} else {
 				return false;
