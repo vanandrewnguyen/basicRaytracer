@@ -1,21 +1,12 @@
 #include "scene.h"
 #include "materialBase.h"
 #include "simpleMaterial.h"
+#include "textureChecker.h"
+#include "textureMono.h"
 
 #define PI 3.1416
 
 Scene::Scene() {
-	// MATERIALS //
-	auto material1 = std::make_shared<SimpleMaterial>(SimpleMaterial());
-	material1->baseColour = qbVector<double>{ std::vector<double>{0.25, 0.5, 0.8} };
-	material1->reflectivity = 0.8;
-	material1->shininess = 10.0;
-
-	auto material2 = std::make_shared<SimpleMaterial>(SimpleMaterial());
-	material2->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.8} };
-	material2->reflectivity = 0.25;
-	material2->shininess = 5.0;
-
 	// CAMERA //
 	// Set parameters
 	currCamera.setPos(qbVector<double>{std::vector<double>{0.0, -10.0, 0.0}});
@@ -25,9 +16,46 @@ Scene::Scene() {
 	currCamera.setAspect(16.0 / 9.0);
 	currCamera.updateCameraGeometry();
 
+	// TEXTURES //
+	auto floorTexture = std::make_shared<Texture::TextureChecker>(Texture::TextureChecker());
+	floorTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{4.0, 4.0}});
+	floorTexture->setColour(qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}}, qbVector<double>{std::vector<double>{0.8, 0.8, 0.8}});
+
+	auto cylinderTexture = std::make_shared<Texture::TextureChecker>(Texture::TextureChecker());
+	cylinderTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{4.0 * PI, 4.0}});
+	cylinderTexture->setColour(qbVector<double>{std::vector<double>{1.0, 0.6, 0.8}}, qbVector<double>{std::vector<double>{0.25, 0.5, 0.8}});
+
+	// MATERIALS //
+	auto matMetal = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	matMetal->baseColour = qbVector<double>{ std::vector<double>{0.25, 0.5, 0.8} };
+	matMetal->reflectivity = 0.8;
+	matMetal->shininess = 10.0;
+
+	auto matPlastic = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	matPlastic->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.8} };
+	matPlastic->reflectivity = 0.05;
+	matPlastic->shininess = 5.0;
+	matPlastic->assignTexture(cylinderTexture);
+
+	auto matFloor = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	matFloor->baseColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
+	matFloor->reflectivity = 0.25;
+	matFloor->shininess = 5.0;
+	matFloor->assignTexture(floorTexture);
+
+	auto matRedWall = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	matRedWall->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.0, 0.0} };
+	matRedWall->reflectivity = 0.0;
+	matRedWall->shininess = 5.0;
+
+	auto matGreenWall = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	matGreenWall->baseColour = qbVector<double>{ std::vector<double>{0.0, 1.0, 0.0} };
+	matGreenWall->reflectivity = 0.0;
+	matGreenWall->shininess = 5.0;
+
 	// CONSTRUCTION //
 	// Modify each sphere (using geometric transforms - translation, rotation, scaling)
-	GeometricTransform matrixSphere1, matrixSphere2, matrixCylinder1, matrixPlaneFloor, matrixPlaneCeil, matrixPlaneRight, matrixPlaneLeft, matrixPlaneBack;
+	GeometricTransform matrixSphere1, matrixCone1, matrixCylinder1, matrixPlaneFloor, matrixPlaneCeil, matrixPlaneRight, matrixPlaneLeft, matrixPlaneBack;
 
 	/*
 	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
@@ -36,15 +64,15 @@ Scene::Scene() {
 		qbVector<double>{std::vector<double>{0.25, 0.25, 0.25}});
 	objectList.at(0)->setTransformMatrix(matrixSphere1);
 	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	objectList.at(0)->assignMaterial(material1); */
+	objectList.at(0)->assignMaterial(material1); 
 
-	objectList.push_back(std::make_shared<ObjectCone>(ObjectCone()));
+	objectList.push_back(std::make_shared<ObjectCylinder>(ObjectCylinder()));
 	matrixCylinder1.setTransform(qbVector<double>{std::vector<double>{0.5, 0.0, 0.5}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
 		qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}});
 	objectList.at(0)->setTransformMatrix(matrixCylinder1);
 	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	//objectList.at(0)->assignMaterial(material1);
+	objectList.at(0)->assignMaterial(material2);
 
 	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
 	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.6}},
@@ -59,67 +87,77 @@ Scene::Scene() {
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
 		qbVector<double>{std::vector<double>{1.5, 1.5, 1.5}});
 	objectList.at(2)->setTransformMatrix(matrixPlaneFloor);
-	objectList.at(2)->baseColour = qbVector<double>{ std::vector<double>{0.9, 0.9, 0.9} };
+	objectList.at(2)->baseColour = qbVector<double>{ std::vector<double>{0.9, 0.9, 0.9} }; */
 
-	/*
 	// Construct sphere
-	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
-	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{0.5, 0.0, 0.75}},
+	objectList.push_back(std::make_shared<ObjectCylinder>(ObjectCylinder()));
+	matrixCylinder1.setTransform(qbVector<double>{std::vector<double>{0.5, 0.0, 0.4}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-		qbVector<double>{std::vector<double>{0.25, 0.25, 0.25}});
-	objectList.at(0)->setTransformMatrix(matrixSphere1);
+		qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}});
+	objectList.at(0)->setTransformMatrix(matrixCylinder1);
 	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	objectList.at(0)->assignMaterial(material1);
+	objectList.at(0)->assignMaterial(matPlastic);
 
 	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
-	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.6}},
+	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.7}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-		qbVector<double>{std::vector<double>{0.4, 0.4, 0.4}});
+		qbVector<double>{std::vector<double>{0.3, 0.3, 0.3}});
 	objectList.at(1)->setTransformMatrix(matrixSphere1);
 	objectList.at(1)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	objectList.at(1)->assignMaterial(material2);
+	objectList.at(1)->assignMaterial(matMetal);
+
+	objectList.push_back(std::make_shared<ObjectCone>(ObjectCone()));
+	matrixCone1.setTransform(qbVector<double>{std::vector<double>{-0.2, 0.0, 0.75}},
+		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{0.25, 0.25, 0.25}});
+	objectList.at(2)->setTransformMatrix(matrixCone1);
+	objectList.at(2)->baseColour = qbVector<double>{ std::vector<double>{0.8, 0.5, 0.8} };
 
 	// Construct plane
 	// Right
 	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
 	matrixPlaneRight.setTransform(qbVector<double>{std::vector<double>{1.5, 0.0, 0.0}},
 		qbVector<double>{std::vector<double>{0.0, 1.57, 0.0}},
-		qbVector<double>{std::vector<double>{1.5, 1.5, 1.0}});
-	objectList.at(2)->setTransformMatrix(matrixPlaneRight);
-	objectList.at(2)->baseColour = qbVector<double>{ std::vector<double>{0.0, 1.0, 0.0} }; 
-
-	// Back
-	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
-	matrixPlaneBack.setTransform(qbVector<double>{std::vector<double>{0.0, 1.5, 0.0}},
-		qbVector<double>{std::vector<double>{-1.57, 0.0, 0.0}},
-		qbVector<double>{std::vector<double>{1.5, 1.5, 1.0}});
-	objectList.at(3)->setTransformMatrix(matrixPlaneBack);
-	objectList.at(3)->baseColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} }; 
+		qbVector<double>{std::vector<double>{1.0, 1.5, 1.0}});
+	objectList.at(3)->setTransformMatrix(matrixPlaneRight);
+	objectList.at(3)->baseColour = qbVector<double>{ std::vector<double>{0.0, 1.0, 0.0} }; 
+	objectList.at(3)->assignMaterial(matGreenWall);
 
 	// Left
 	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
 	matrixPlaneLeft.setTransform(qbVector<double>{std::vector<double>{-1.5, 0.0, 0.0}},
 		qbVector<double>{std::vector<double>{0.0, -1.57, 0.0}},
-		qbVector<double>{std::vector<double>{1.5, 1.5, 1.0}});
-	objectList.at(3)->setTransformMatrix(matrixPlaneLeft);
-	objectList.at(3)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.0, 0.0} };
+		qbVector<double>{std::vector<double>{1.0, 1.5, 1.0}});
+	objectList.at(4)->setTransformMatrix(matrixPlaneLeft);
+	objectList.at(4)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.0, 0.0} };
+	objectList.at(4)->assignMaterial(matRedWall);
 
 	// Floor
 	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
 	matrixPlaneFloor.setTransform(qbVector<double>{std::vector<double>{0.0, 0.0, 1.0}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
 		qbVector<double>{std::vector<double>{1.5, 1.5, 1.5}});
-	objectList.at(4)->setTransformMatrix(matrixPlaneFloor);
-	objectList.at(4)->baseColour = qbVector<double>{ std::vector<double>{0.9, 0.9, 0.9} }; 
+	objectList.at(5)->setTransformMatrix(matrixPlaneFloor);
+	objectList.at(5)->baseColour = qbVector<double>{ std::vector<double>{0.9, 0.9, 0.9} }; 
+	objectList.at(5)->assignMaterial(matFloor);
+
+	// Back
+	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
+	matrixPlaneBack.setTransform(qbVector<double>{std::vector<double>{0.0, 1.5, 0.0}},
+		qbVector<double>{std::vector<double>{-1.57, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{1.5, 1.0, 1.0}});
+	objectList.at(6)->setTransformMatrix(matrixPlaneBack);
+	objectList.at(6)->baseColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
+	objectList.at(6)->assignMaterial(matFloor);
 
 	// Ceiling
 	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
 	matrixPlaneCeil.setTransform(qbVector<double>{std::vector<double>{0.0, 0.0, -1.0}},
 		qbVector<double>{std::vector<double>{0.0, 3.14, 0.0}},
 		qbVector<double>{std::vector<double>{1.5, 1.5, 1.5}});
-	objectList.at(5)->setTransformMatrix(matrixPlaneCeil);
-	objectList.at(5)->baseColour = qbVector<double>{ std::vector<double>{0.9, 0.9, 0.9} };
-	*/
+	objectList.at(7)->setTransformMatrix(matrixPlaneCeil);
+	objectList.at(7)->baseColour = qbVector<double>{ std::vector<double>{0.9, 0.9, 0.9} };
+	objectList.at(7)->assignMaterial(matFloor);
 
 	// LIGHTING //
 	// Construct point light

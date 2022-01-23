@@ -21,7 +21,13 @@ qbVector<double> SimpleMaterial::computeColour(const std::vector<std::shared_ptr
 	qbVector<double> specColour{ 3 };
 
 	// Compute diffuse light
-	diffColour = computeDiffuseColour(objectList, lightList, currentObject, intersectionPoint, localNormal, baseColour);
+	if (!hasTexture) {
+		diffColour = computeDiffuseColour(objectList, lightList, currentObject, intersectionPoint, localNormal, baseColour);
+	} else {
+		// Super cool reference here, use the tex vector to get first element and grab colour at a uv coord which is given by the current obj
+		diffColour = computeDiffuseColour(objectList, lightList, currentObject, intersectionPoint, localNormal, 
+		textureList.at(0)->getColourAtUVCoord(currentObject->uvCoords));
+	}
 
 	// Compute reflections!
 	if (reflectivity > 0.0) {

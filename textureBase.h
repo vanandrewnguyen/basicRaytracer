@@ -11,7 +11,7 @@ namespace Texture {
 	public:
 		// Constructor destructor
 		TextureBase();
-		~TextureBase();
+		virtual ~TextureBase();
 
 		// Functions
 		// Returns 4D vector (RGBA)

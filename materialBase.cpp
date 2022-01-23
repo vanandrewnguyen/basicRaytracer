@@ -127,3 +127,12 @@ bool MaterialBase::castRay(const Ray& castRay, const std::vector<std::shared_ptr
 	}
 	return intersectionFound;
 }
+
+// Assign a texture to the material
+void MaterialBase::assignTexture(const std::shared_ptr<Texture::TextureBase>& inputTex) {
+	textureList.push_back(inputTex);
+	hasTexture = true;
+}
+
+
+

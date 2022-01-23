@@ -3,6 +3,7 @@
 #include <array>
 
 #define BIGNUMBER 100e6
+#define PI 3.1416
 
 ObjectCone::ObjectCone() {
 
@@ -135,6 +136,16 @@ bool ObjectCone::testIntersection(const Ray& castRay, qbVector<double>& intersec
 
 		// Return base colour
 		localColour = baseColour;
+
+		// Compute u and v, then store uv coords
+		double x = validPoi.GetElement(0);
+		double y = validPoi.GetElement(1);
+		double z = validPoi.GetElement(2);
+		double u = atan2(y, x) / PI;
+		double v = (z * 2.0) + 1.0; // check surf eqn
+		uvCoords.SetElement(0, u);
+		uvCoords.SetElement(1, v);
+
 		return true;
 	}
 	else {
@@ -154,6 +165,14 @@ bool ObjectCone::testIntersection(const Ray& castRay, qbVector<double>& intersec
 
 				// Return base colour
 				localColour = baseColour;
+
+				// End cap uv coord (same as plane)
+				double x = validPoi.GetElement(0);
+				double y = validPoi.GetElement(1);
+				double z = validPoi.GetElement(2);
+				uvCoords.SetElement(0, x);
+				uvCoords.SetElement(1, y);
+
 				return true;
 			}
 			else {

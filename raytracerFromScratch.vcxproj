@@ -166,6 +166,8 @@
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="simpleMaterial.cpp" />
     <ClCompile Include="textureBase.cpp" />
+    <ClCompile Include="textureChecker.cpp" />
+    <ClCompile Include="textureMono.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
@@ -186,6 +188,8 @@
     <ClInclude Include="scene.h" />
     <ClInclude Include="simpleMaterial.h" />
     <ClInclude Include="textureBase.h" />
+    <ClInclude Include="textureChecker.h" />
+    <ClInclude Include="textureMono.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

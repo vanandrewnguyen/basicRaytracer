@@ -176,6 +176,7 @@ bool ObjectCylinder::testIntersection(const Ray& castRay, qbVector<double>& inte
 				// Return base colour
 				localColour = baseColour;
 
+				// End cap uv coord
 				double x = validPoi.GetElement(0);
 				double y = validPoi.GetElement(1);
 				double z = validPoi.GetElement(2);

@@ -90,6 +90,12 @@
     <ClCompile Include="textureBase.cpp">
       <Filter>Source Files\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="textureMono.cpp">
+      <Filter>Source Files\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="textureChecker.cpp">
+      <Filter>Source Files\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="capp.h">
@@ -144,6 +150,12 @@
       <Filter>Header Files\Primatives</Filter>
     </ClInclude>
     <ClInclude Include="textureBase.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="textureMono.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="textureChecker.h">
       <Filter>Header Files\Textures</Filter>
     </ClInclude>
   </ItemGroup>

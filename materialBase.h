@@ -2,6 +2,7 @@
 #define MATERIALBASE_H
 
 #include <memory>
+#include "textureBase.h"
 #include "objectBase.h"
 #include "lightBase.h"
 #include "qbLinAlg/qbVector.h"
@@ -26,11 +27,17 @@ public:
 	qbVector<double> computeReflectionColour(const std::vector<std::shared_ptr<ObjectBase>>& objectList,
 		const std::vector<std::shared_ptr<LightBase>>& lightList, const std::shared_ptr<ObjectBase>& currentObject,
 		const qbVector<double>& intersectionPoint, const qbVector<double>& localNormal, const Ray& incidentRay);
+	void assignTexture(const std::shared_ptr<Texture::TextureBase>& inputTex);
+
 
 public:
 	// Counter for reflections
 	inline static int maxReflRays; // inline static means one instance of each variable regardless of how many materialBase instances there are
 	inline static int reflRayCount;
+
+	// Texture list
+	std::vector<std::shared_ptr<Texture::TextureBase>> textureList; // can have multiple textures in a vector
+	bool hasTexture = false;
 };
 
 
