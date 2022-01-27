@@ -167,6 +167,7 @@
     <ClCompile Include="simpleMaterial.cpp" />
     <ClCompile Include="textureBase.cpp" />
     <ClCompile Include="textureChecker.cpp" />
+    <ClCompile Include="textureImage.cpp" />
     <ClCompile Include="textureMono.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +190,7 @@
     <ClInclude Include="simpleMaterial.h" />
     <ClInclude Include="textureBase.h" />
     <ClInclude Include="textureChecker.h" />
+    <ClInclude Include="textureImage.h" />
     <ClInclude Include="textureMono.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -96,6 +96,9 @@
     <ClCompile Include="textureChecker.cpp">
       <Filter>Source Files\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="textureImage.cpp">
+      <Filter>Source Files\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="capp.h">
@@ -156,6 +159,9 @@
       <Filter>Header Files\Textures</Filter>
     </ClInclude>
     <ClInclude Include="textureChecker.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="textureImage.h">
       <Filter>Header Files\Textures</Filter>
     </ClInclude>
   </ItemGroup>

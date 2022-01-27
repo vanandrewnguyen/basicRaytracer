@@ -77,11 +77,9 @@ bool ObjectSphere::testIntersection(const Ray& castRay, qbVector<double>& inters
 			double x = pointOfIntersection.GetElement(0);
 			double y = pointOfIntersection.GetElement(1);
 			double z = pointOfIntersection.GetElement(2);
-			double u = atan(sqrtf(pow(x, 2.0) + pow(y, 2.0)) / z);
-			double v = atan(y / x);
-			if (x < 0) {
-				v += PI;
-			}
+			double u = atan2(sqrtf(pow(x, 2.0) + pow(y, 2.0)), z);
+			double v = atan2(y, x);
+			
 			// Correct ratio
 			u /= PI; 
 			v /= PI;
