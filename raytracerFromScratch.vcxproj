@@ -165,6 +165,7 @@
     <ClCompile Include="ray.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="simpleMaterial.cpp" />
+    <ClCompile Include="simpleRefractiveMaterial.cpp" />
     <ClCompile Include="textureBase.cpp" />
     <ClCompile Include="textureChecker.cpp" />
     <ClCompile Include="textureImage.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="ray.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="simpleMaterial.h" />
+    <ClInclude Include="simpleRefractiveMaterial.h" />
     <ClInclude Include="textureBase.h" />
     <ClInclude Include="textureChecker.h" />
     <ClInclude Include="textureImage.h" />

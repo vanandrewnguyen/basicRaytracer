@@ -48,6 +48,11 @@ qbVector<double> MaterialBase::computeDiffuseColour(const std::vector<std::share
 		difCol.SetElement(0, outputRed * baseColour.GetElement(0));
 		difCol.SetElement(1, outputGreen * baseColour.GetElement(1));
 		difCol.SetElement(2, outputBlue * baseColour.GetElement(2));
+	} else {
+		// Ambient light (not really realistic, check out pbr and ssao)
+		difCol.SetElement(0, ambientCol.GetElement(0) * ambientLightIntensity * baseColour.GetElement(0));
+		difCol.SetElement(1, ambientCol.GetElement(1) * ambientLightIntensity * baseColour.GetElement(1));
+		difCol.SetElement(2, ambientCol.GetElement(2) * ambientLightIntensity * baseColour.GetElement(2));
 	}
 	
 	// Return mat col

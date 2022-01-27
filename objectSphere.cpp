@@ -54,12 +54,35 @@ bool ObjectSphere::testIntersection(const Ray& castRay, qbVector<double>& inters
 		double termB = (-b - determinant) / 2.0;
 
 		// If tA or tB are negative, this means that some part of the object is behind the camera so we ignore it
-		if ((termA < 0.0) || (termB < 0.0)) {
+		if ((termA < 0.0) && (termB < 0.0)) {
 			return false;
 		} else {
 			// Determine point of intersection (update pointer of intersectPoint)
 			// Start point + direction vector * scale
-			pointOfIntersection = ((termA < termB) ? backRay.currPointA + (vectorV * termA) : backRay.currPointA + (vectorV * termB));
+			// pointOfIntersection = ((termA < termB) ? backRay.currPointA + (vectorV * termA) : backRay.currPointA + (vectorV * termB));
+			// Changes, check at least if one is negative or not
+			if (termA < termB) {
+				if (termA > 0.0) {
+					pointOfIntersection = backRay.currPointA + (vectorV * termA);
+				} else {
+					if (termB > 0.0) {
+						pointOfIntersection = backRay.currPointA + (vectorV * termB);
+					} else {
+						// If both terms are negative then it is not a valid intersection, hence return false
+						return false;
+					}
+				}
+			} else {
+				if (termB > 0.0) {
+					pointOfIntersection = backRay.currPointA + (vectorV * termB);
+				} else {
+					if (termA > 0.0) {
+						pointOfIntersection = backRay.currPointA + (vectorV * termA);
+					} else {
+						return false;
+					}
+				}
+			}
 
 			// Transform poi back to world coord
 			intersectionPoint = transformMatrix.applyTransform(pointOfIntersection, FWDTRANSFORM);

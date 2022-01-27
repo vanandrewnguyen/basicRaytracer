@@ -35,6 +35,10 @@ public:
 	inline static int maxReflRays; // inline static means one instance of each variable regardless of how many materialBase instances there are
 	inline static int reflRayCount;
 
+	// Ambient light
+	inline static qbVector<double> ambientCol{ std::vector<double>{1.0, 1.0, 1.0} };
+	inline static double ambientLightIntensity = 0.1;
+
 	// Texture list
 	std::vector<std::shared_ptr<Texture::TextureBase>> textureList; // can have multiple textures in a vector
 	bool hasTexture = false;
