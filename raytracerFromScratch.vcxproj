@@ -170,6 +170,7 @@
     <ClCompile Include="textureChecker.cpp" />
     <ClCompile Include="textureImage.cpp" />
     <ClCompile Include="textureMono.cpp" />
+    <ClCompile Include="textureStripe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="textureChecker.h" />
     <ClInclude Include="textureImage.h" />
     <ClInclude Include="textureMono.h" />
+    <ClInclude Include="textureStripe.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

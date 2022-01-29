@@ -102,6 +102,9 @@
     <ClCompile Include="simpleRefractiveMaterial.cpp">
       <Filter>Source Files\Materials</Filter>
     </ClCompile>
+    <ClCompile Include="textureStripe.cpp">
+      <Filter>Source Files\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="capp.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="simpleRefractiveMaterial.h">
       <Filter>Header Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="textureStripe.h">
+      <Filter>Header Files\Textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
