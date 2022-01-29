@@ -14,9 +14,12 @@ Features:
 - Moveable camera system
 - Material support
 - Refections
-- Texture mapping
+- Refractions
+- UV Texture mapping (importing images and custom textures)
 
 Example images:
+![final tex render](https://user-images.githubusercontent.com/53636492/151657150-7bfe58f1-4834-4763-9d07-3f7612fa3060.PNG)
+
 ![final cornell box](https://user-images.githubusercontent.com/53636492/150660611-30e6c056-427b-4da4-a524-93d31a9c85c7.PNG)
 
 ![reflections-export](https://user-images.githubusercontent.com/53636492/149031954-15a2ffe1-8df9-4b7c-81b8-c6cba5974f8e.png)
