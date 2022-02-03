@@ -105,6 +105,12 @@
     <ClCompile Include="textureStripe.cpp">
       <Filter>Source Files\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="textureSimplex.cpp">
+      <Filter>Source Files\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="noiseFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="capp.h">
@@ -175,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="textureStripe.h">
       <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="textureSimplex.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="noiseFunctions.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

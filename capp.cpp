@@ -37,7 +37,7 @@ bool CApp::onInit() {
 		
 		// Setup texture (just debugging)
 		/*
-		Texture::TextureChecker testTex;
+		Texture::TextureSimplex testTex;
 		testTex.setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{4.0, 4.0}});
 		for (int y = 0; y < windowHeight; ++y) {
 			for (int x = 0; x < windowWidth; ++x) {
@@ -47,7 +47,8 @@ bool CApp::onInit() {
 				qbVector<double> outputCol = testTex.getColourAtUVCoord(UV);
 				currImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2));
 			}
-		} */
+		}
+		*/
 
 		// Display scene
 		currImage.handleDisplay();

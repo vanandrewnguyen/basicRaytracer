@@ -8,14 +8,15 @@
 #include "textureStripe.h"
 #include "textureMono.h"
 #include "textureImage.h"
+#include "textureSimplex.h"
 
 #define PI 3.1416
 
 Scene::Scene() {
 	// CAMERA //
 	// Set parameters
-	currCamera.setPos(qbVector<double>{std::vector<double>{-2.0, -10.0, -1.0}}); // {0.0, -10.0, 0.0}
-	currCamera.setLookat(qbVector<double>{std::vector<double>{0.4, 0.0, 0.2}});
+	currCamera.setPos(qbVector<double>{std::vector<double>{0.0, -10.0, 0.0}}); 
+	currCamera.setLookat(qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}});
 	currCamera.setUp(qbVector<double>{std::vector<double>{0.0, 0.0, 1.0}});
 	currCamera.setHorSize(0.25);
 	currCamera.setAspect(16.0 / 9.0);
@@ -26,20 +27,15 @@ Scene::Scene() {
 	MaterialBase::ambientLightIntensity = 0.1;
 
 	// TEXTURES //
-	/*
 	auto floorTexture = std::make_shared<Texture::TextureChecker>(Texture::TextureChecker());
 	floorTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{4.0, 4.0}});
 	floorTexture->setColour(qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}}, qbVector<double>{std::vector<double>{0.8, 0.8, 0.8}});
 
-	auto cylinderTexture = std::make_shared<Texture::TextureChecker>(Texture::TextureChecker());
-	cylinderTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{4.0 * PI, 4.0}});
-	cylinderTexture->setColour(qbVector<double>{std::vector<double>{1.0, 0.6, 0.8}}, qbVector<double>{std::vector<double>{0.25, 0.5, 0.8}});
+	auto cylinderTexture = std::make_shared<Texture::TextureSimplex>(Texture::TextureSimplex());
+	cylinderTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{1.0 * PI, 1.0}});
+	cylinderTexture->setColour(qbVector<double>{std::vector<double>{1.0, 0.8, 0.9}}, qbVector<double>{std::vector<double>{0.2, 0.1, 0.1}});
 
-	auto imageTexture = std::make_shared<Texture::TextureImage>(Texture::TextureImage());
-	imageTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{0.5 * PI, 0.5}});
-	imageTexture->loadImage("sandBrickTexture.bmp");
-	*/
-
+	/*
 	auto texBrick = std::make_shared<Texture::TextureImage>(Texture::TextureImage());
 	texBrick->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{1.0, 1.0}});
 	texBrick->loadImage("texBrickWall.bmp");
@@ -55,8 +51,10 @@ Scene::Scene() {
 	auto texSafetyCone = std::make_shared<Texture::TextureStripe>(Texture::TextureStripe());
 	texSafetyCone->setTransform(qbVector<double>{std::vector<double>{0.0, 0.15}}, 0.0, qbVector<double>{std::vector<double>{1.6 * PI, 1.6}});
 	texSafetyCone->setColour(qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}}, qbVector<double>{std::vector<double>{1.0, 0.65, 0.0}});
+	*/
 
 	// MATERIALS //
+	/*
 	auto matBrickWall = std::make_shared<SimpleMaterial>(SimpleMaterial());
 	matBrickWall->baseColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
 	matBrickWall->reflectivity = 0.0;
@@ -92,13 +90,17 @@ Scene::Scene() {
 	matGlass->shininess = 16.0;
 	matGlass->translucency = 0.8;
 	matGlass->IOR = 1.500;
+	*/
+	auto matMetal = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	matMetal->baseColour = qbVector<double>{ std::vector<double>{0.25, 0.5, 0.8} };
+	matMetal->reflectivity = 0.9;
+	matMetal->shininess = 10.0;
 
-	/*
 	auto matCardboard = std::make_shared<SimpleMaterial>(SimpleMaterial());
 	matCardboard->baseColour = qbVector<double>{ std::vector<double>{0.8, 0.5, 0.8} };
 	matCardboard->reflectivity = 0.0;
 	matCardboard->shininess = 0.0;
-	matCardboard->assignTexture(imageTexture);
+	matCardboard->assignTexture(cylinderTexture);
 
 	auto matFloor = std::make_shared<SimpleMaterial>(SimpleMaterial());
 	matFloor->baseColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
@@ -114,13 +116,42 @@ Scene::Scene() {
 	auto matGreenWall = std::make_shared<SimpleMaterial>(SimpleMaterial());
 	matGreenWall->baseColour = qbVector<double>{ std::vector<double>{0.0, 1.0, 0.0} };
 	matGreenWall->reflectivity = 0.0;
-	matGreenWall->shininess = 5.0; */
+	matGreenWall->shininess = 5.0; 
 
 	// CONSTRUCTION //
 	// Modify each sphere (using geometric transforms - translation, rotation, scaling)
 	GeometricTransform matrixSphere1, matrixSphere2, matrixCone1, matrixCylinder1, matrixPlaneFloor, matrixPlaneCeil, matrixPlaneRight, matrixPlaneLeft, matrixPlaneBack, matrixPlaneMirror;
 
 	// Construct sphere
+	objectList.push_back(std::make_shared<ObjectCylinder>(ObjectCylinder()));
+	matrixCylinder1.setTransform(qbVector<double>{std::vector<double>{0.5, 0.0, 0.4}},
+		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}});
+	objectList.at(0)->setTransformMatrix(matrixCylinder1);
+	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
+	objectList.at(0)->assignMaterial(matCardboard);
+
+	// Floor
+	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
+	matrixPlaneFloor.setTransform(qbVector<double>{std::vector<double>{0.0, 0.0, 1.0}},
+		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{1.5, 1.5, 1.5}});
+	objectList.at(1)->setTransformMatrix(matrixPlaneFloor);
+	objectList.at(1)->baseColour = qbVector<double>{ std::vector<double>{0.9, 0.9, 0.9} };
+	objectList.at(1)->assignMaterial(matFloor);
+
+	/*
+	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
+	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.7}},
+		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{0.3, 0.3, 0.3}});
+	objectList.at(1)->setTransformMatrix(matrixSphere1);
+	objectList.at(1)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
+	objectList.at(1)->assignMaterial(matMetal);
+	*/
+
+	// Grunge alleyway render
+	/*
 	objectList.push_back(std::make_shared<ObjectCylinder>(ObjectCylinder()));
 	matrixCylinder1.setTransform(qbVector<double>{std::vector<double>{-0.5, 0.8, 0.5}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
@@ -188,6 +219,7 @@ Scene::Scene() {
 	objectList.at(7)->setTransformMatrix(matrixPlaneBack);
 	objectList.at(7)->baseColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
 	objectList.at(7)->assignMaterial(matPlasterWall);
+	*/
 
 	/*
 	Cornell Box Setup
@@ -267,7 +299,7 @@ Scene::Scene() {
 	// Construct point light
 	lightList.push_back(std::make_shared<PointLight>(PointLight()));
 	// Move point light off the origin, and set colour
-	lightList.at(0)->lightLocation = qbVector<double>{ std::vector<double>{-1.8, -1.0, -1.5} }; 
+	lightList.at(0)->lightLocation = qbVector<double>{ std::vector<double>{0.0, -2.0, -2.0} }; 
 	lightList.at(0)->lightColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
 
 }

@@ -6,8 +6,7 @@
 #include "image.h"
 #include "scene.h"
 #include "camera.h"
-#include "textureMono.h"
-#include "textureChecker.h"
+#include "textureSimplex.h"
 
 class CApp {
 public:
