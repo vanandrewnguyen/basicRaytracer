@@ -9,6 +9,7 @@
 #include "textureMono.h"
 #include "textureImage.h"
 #include "textureSimplex.h"
+#include "texturePerlin.h"
 
 #define PI 3.1416
 
@@ -33,7 +34,11 @@ Scene::Scene() {
 
 	auto cylinderTexture = std::make_shared<Texture::TextureSimplex>(Texture::TextureSimplex());
 	cylinderTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{1.0 * PI, 1.0}});
-	cylinderTexture->setColour(qbVector<double>{std::vector<double>{1.0, 0.8, 0.9}}, qbVector<double>{std::vector<double>{0.2, 0.1, 0.1}});
+	cylinderTexture->setColour(qbVector<double>{std::vector<double>{0.905, 0.886, 0.513}}, qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}});
+
+	auto sphereTexture = std::make_shared<Texture::TexturePerlin>(Texture::TexturePerlin());
+	sphereTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{1.0, 1.0}});
+	sphereTexture->setColour(qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}});
 
 	/*
 	auto texBrick = std::make_shared<Texture::TextureImage>(Texture::TextureImage());
@@ -96,11 +101,17 @@ Scene::Scene() {
 	matMetal->reflectivity = 0.9;
 	matMetal->shininess = 10.0;
 
-	auto matCardboard = std::make_shared<SimpleMaterial>(SimpleMaterial());
-	matCardboard->baseColour = qbVector<double>{ std::vector<double>{0.8, 0.5, 0.8} };
-	matCardboard->reflectivity = 0.0;
-	matCardboard->shininess = 0.0;
-	matCardboard->assignTexture(cylinderTexture);
+	auto matMarble = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	matMarble->baseColour = qbVector<double>{ std::vector<double>{0.8, 0.5, 0.8} };
+	matMarble->reflectivity = 0.0;
+	matMarble->shininess = 0.0;
+	matMarble->assignTexture(cylinderTexture);
+
+	auto matNoise = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	matNoise->baseColour = qbVector<double>{ std::vector<double>{0.8, 0.5, 0.8} };
+	matNoise->reflectivity = 0.0;
+	matNoise->shininess = 0.0;
+	matNoise->assignTexture(sphereTexture);
 
 	auto matFloor = std::make_shared<SimpleMaterial>(SimpleMaterial());
 	matFloor->baseColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
@@ -129,7 +140,7 @@ Scene::Scene() {
 		qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}});
 	objectList.at(0)->setTransformMatrix(matrixCylinder1);
 	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	objectList.at(0)->assignMaterial(matCardboard);
+	objectList.at(0)->assignMaterial(matMarble);
 
 	// Floor
 	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
@@ -140,15 +151,13 @@ Scene::Scene() {
 	objectList.at(1)->baseColour = qbVector<double>{ std::vector<double>{0.9, 0.9, 0.9} };
 	objectList.at(1)->assignMaterial(matFloor);
 
-	/*
 	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
-	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.7}},
+	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.4}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-		qbVector<double>{std::vector<double>{0.3, 0.3, 0.3}});
-	objectList.at(1)->setTransformMatrix(matrixSphere1);
-	objectList.at(1)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	objectList.at(1)->assignMaterial(matMetal);
-	*/
+		qbVector<double>{std::vector<double>{0.4, 0.4, 0.4}});
+	objectList.at(2)->setTransformMatrix(matrixSphere1);
+	objectList.at(2)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
+	objectList.at(2)->assignMaterial(matNoise);
 
 	// Grunge alleyway render
 	/*

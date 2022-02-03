@@ -20,10 +20,10 @@ qbVector<double> Texture::TextureSimplex::getColourAtUVCoord(const qbVector<doub
 	// Get local colour
 	qbVector<double> localCol{ 4 };
     float noiseInt = NoiseFunctions::smoothstep(-0.1, 0.8, abs(NoiseFunctions::noiseFBM(4, newU, newV, 1.0, 1.0)));
-    localCol = colour1 * noiseInt;
-	
-	//int check = static_cast<int>(floor(newU)) + static_cast<int>(floor(newV));
-	//localCol = ((check % 2) == 0) ? colour1 : colour2;
+	localCol.SetElement(0, NoiseFunctions::lerp(colour1.GetElement(0), colour2.GetElement(0), noiseInt));
+	localCol.SetElement(1, NoiseFunctions::lerp(colour1.GetElement(1), colour2.GetElement(1), noiseInt));
+	localCol.SetElement(2, NoiseFunctions::lerp(colour1.GetElement(2), colour2.GetElement(2), noiseInt));
+	localCol.SetElement(3, 1.0);
 
 	return localCol;
 

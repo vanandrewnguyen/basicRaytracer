@@ -16,6 +16,7 @@ namespace NoiseFunctions {
 
 	float clamp(float x, float min, float max);
 	float smoothstep(float a, float b, float step);
+	float lerp(float curr, float dest, float step);
 };
 
 #endif

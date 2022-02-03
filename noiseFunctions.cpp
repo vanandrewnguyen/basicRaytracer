@@ -142,3 +142,7 @@ float NoiseFunctions::smoothstep(float a, float b, float step) {
     // use polynomial for smoothstep (cubic)
     return val * val * (3.0 - val * 2.0);
 }
+
+float NoiseFunctions::lerp(float curr, float dest, float step) {
+    return (1 - step) * curr + step * dest;
+}
