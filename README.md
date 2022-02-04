@@ -16,6 +16,7 @@ Features:
 - Refections
 - Refractions
 - UV Texture mapping (importing images and custom textures)
+- Noise generation (as textures)
 
 Example images:
 
