@@ -10,6 +10,7 @@
 #include "textureImage.h"
 #include "textureSimplex.h"
 #include "texturePerlin.h"
+#include "texturePolkaDot.h"
 
 #define PI 3.1416
 
@@ -39,6 +40,11 @@ Scene::Scene() {
 	auto sphereTexture = std::make_shared<Texture::TexturePerlin>(Texture::TexturePerlin());
 	sphereTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{2.0, 2.0}});
 	sphereTexture->setColour(qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}});
+
+	auto coneTexture = std::make_shared<Texture::TexturePolkaDot>(Texture::TexturePolkaDot());
+	coneTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{2.0 * PI, 2.0}});
+	coneTexture->setColour(qbVector<double>{std::vector<double>{0.0, 0.1, 0.2}}, qbVector<double>{std::vector<double>{1.0, 0.0, 0.0}});
+	coneTexture->setRad(0.3, 0.05);
 
 	/*
 	auto texBrick = std::make_shared<Texture::TextureImage>(Texture::TextureImage());
@@ -113,6 +119,12 @@ Scene::Scene() {
 	matNoise->shininess = 0.0;
 	matNoise->assignTexture(sphereTexture);
 
+	auto matDot = std::make_shared<SimpleMaterial>(SimpleMaterial());
+	matDot->baseColour = qbVector<double>{ std::vector<double>{0.8, 0.5, 0.8} };
+	matDot->reflectivity = 0.0;
+	matDot->shininess = 0.0;
+	matDot->assignTexture(coneTexture);
+
 	auto matFloor = std::make_shared<SimpleMaterial>(SimpleMaterial());
 	matFloor->baseColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
 	matFloor->reflectivity = 0.25;
@@ -135,9 +147,9 @@ Scene::Scene() {
 
 
 	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
-	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.4}},
+	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.5}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-		qbVector<double>{std::vector<double>{0.6, 0.6, 0.6}});
+		qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}});
 	objectList.at(0)->setTransformMatrix(matrixSphere1);
 	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
 	objectList.at(0)->assignMaterial(matNoise);
@@ -158,6 +170,14 @@ Scene::Scene() {
 	objectList.at(2)->setTransformMatrix(matrixCylinder1);
 	objectList.at(2)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
 	objectList.at(2)->assignMaterial(matMarble);
+
+	objectList.push_back(std::make_shared<ObjectCone>(ObjectCone()));
+	matrixCone1.setTransform(qbVector<double>{std::vector<double>{-0.1, -0.7, 0.5}},
+		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
+		qbVector<double>{std::vector<double>{0.4, 0.4, 0.5}});
+	objectList.at(3)->setTransformMatrix(matrixCone1);
+	objectList.at(3)->baseColour = qbVector<double>{ std::vector<double>{0.8, 0.5, 0.8} };
+	objectList.at(3)->assignMaterial(matDot);
 
 	// Grunge alleyway render
 	/*

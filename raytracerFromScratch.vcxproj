@@ -172,6 +172,7 @@
     <ClCompile Include="textureImage.cpp" />
     <ClCompile Include="textureMono.cpp" />
     <ClCompile Include="texturePerlin.cpp" />
+    <ClCompile Include="texturePolkaDot.cpp" />
     <ClCompile Include="textureSimplex.cpp" />
     <ClCompile Include="textureStripe.cpp" />
   </ItemGroup>
@@ -200,6 +201,7 @@
     <ClInclude Include="textureImage.h" />
     <ClInclude Include="textureMono.h" />
     <ClInclude Include="texturePerlin.h" />
+    <ClInclude Include="texturePolkaDot.h" />
     <ClInclude Include="textureSimplex.h" />
     <ClInclude Include="textureStripe.h" />
   </ItemGroup>

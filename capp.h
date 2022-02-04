@@ -6,7 +6,7 @@
 #include "image.h"
 #include "scene.h"
 #include "camera.h"
-#include "texturePerlin.h"
+#include "texturePolkaDot.h"
 
 class CApp {
 public:

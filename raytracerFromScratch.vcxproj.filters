@@ -114,6 +114,9 @@
     <ClCompile Include="texturePerlin.cpp">
       <Filter>Source Files\Textures</Filter>
     </ClCompile>
+    <ClCompile Include="texturePolkaDot.cpp">
+      <Filter>Source Files\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="capp.h">
@@ -192,6 +195,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="texturePerlin.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="texturePolkaDot.h">
       <Filter>Header Files\Textures</Filter>
     </ClInclude>
   </ItemGroup>
