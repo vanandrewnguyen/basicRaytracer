@@ -16,8 +16,8 @@
 Scene::Scene() {
 	// CAMERA //
 	// Set parameters
-	currCamera.setPos(qbVector<double>{std::vector<double>{0.0, -10.0, 0.0}}); 
-	currCamera.setLookat(qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}});
+	currCamera.setPos(qbVector<double>{std::vector<double>{-3.0, -9.0, -1.0}}); // 0.0, -10.0, 0.0
+	currCamera.setLookat(qbVector<double>{std::vector<double>{0.2, 0.0, 0.5}}); // 0.0, 0.0, 0.0
 	currCamera.setUp(qbVector<double>{std::vector<double>{0.0, 0.0, 1.0}});
 	currCamera.setHorSize(0.25);
 	currCamera.setAspect(16.0 / 9.0);
@@ -37,7 +37,7 @@ Scene::Scene() {
 	cylinderTexture->setColour(qbVector<double>{std::vector<double>{0.905, 0.886, 0.513}}, qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}});
 
 	auto sphereTexture = std::make_shared<Texture::TexturePerlin>(Texture::TexturePerlin());
-	sphereTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{1.0, 1.0}});
+	sphereTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{2.0, 2.0}});
 	sphereTexture->setColour(qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}});
 
 	/*
@@ -133,14 +133,14 @@ Scene::Scene() {
 	// Modify each sphere (using geometric transforms - translation, rotation, scaling)
 	GeometricTransform matrixSphere1, matrixSphere2, matrixCone1, matrixCylinder1, matrixPlaneFloor, matrixPlaneCeil, matrixPlaneRight, matrixPlaneLeft, matrixPlaneBack, matrixPlaneMirror;
 
-	// Construct sphere
-	objectList.push_back(std::make_shared<ObjectCylinder>(ObjectCylinder()));
-	matrixCylinder1.setTransform(qbVector<double>{std::vector<double>{0.5, 0.0, 0.4}},
+
+	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
+	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.4}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-		qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}});
-	objectList.at(0)->setTransformMatrix(matrixCylinder1);
+		qbVector<double>{std::vector<double>{0.6, 0.6, 0.6}});
+	objectList.at(0)->setTransformMatrix(matrixSphere1);
 	objectList.at(0)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	objectList.at(0)->assignMaterial(matMarble);
+	objectList.at(0)->assignMaterial(matNoise);
 
 	// Floor
 	objectList.push_back(std::make_shared<ObjectPlane>(ObjectPlane()));
@@ -151,13 +151,13 @@ Scene::Scene() {
 	objectList.at(1)->baseColour = qbVector<double>{ std::vector<double>{0.9, 0.9, 0.9} };
 	objectList.at(1)->assignMaterial(matFloor);
 
-	objectList.push_back(std::make_shared<ObjectSphere>(ObjectSphere()));
-	matrixSphere1.setTransform(qbVector<double>{std::vector<double>{-0.7, -0.1, 0.4}},
+	objectList.push_back(std::make_shared<ObjectCylinder>(ObjectCylinder()));
+	matrixCylinder1.setTransform(qbVector<double>{std::vector<double>{0.5, 0.0, 0.4}},
 		qbVector<double>{std::vector<double>{0.0, 0.0, 0.0}},
-		qbVector<double>{std::vector<double>{0.4, 0.4, 0.4}});
-	objectList.at(2)->setTransformMatrix(matrixSphere1);
+		qbVector<double>{std::vector<double>{0.5, 0.5, 0.5}});
+	objectList.at(2)->setTransformMatrix(matrixCylinder1);
 	objectList.at(2)->baseColour = qbVector<double>{ std::vector<double>{1.0, 0.6, 0.6} };
-	objectList.at(2)->assignMaterial(matNoise);
+	objectList.at(2)->assignMaterial(matMarble);
 
 	// Grunge alleyway render
 	/*
@@ -307,10 +307,8 @@ Scene::Scene() {
 	// POINT LIGHTING //
 	// Construct point light
 	lightList.push_back(std::make_shared<PointLight>(PointLight()));
-	// Move point light off the origin, and set colour
 	lightList.at(0)->lightLocation = qbVector<double>{ std::vector<double>{0.0, -2.0, -2.0} }; 
-	lightList.at(0)->lightColour = qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
-
+	lightList.at(0)->lightColour = qbVector<double>{ std::vector<double>{1.0, 0.95, 0.9} }; // 1.0, 1.0, 1.0
 }
 
 // Render function

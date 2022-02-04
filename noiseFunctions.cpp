@@ -110,20 +110,62 @@ float NoiseFunctions::noise(float x, float y) {
     return 45.23065f * (n0 + n1 + n2);
 }
 
-float NoiseFunctions::noiseFBM(int octaves, float x, float y, float amplitude, float freq) {
+float NoiseFunctions::perlinNoise(float x, float y) {
+    double intPart, f;
+
+    // Floor and fract the coords we're given to form cells
+    float fx = floor(x);
+    float fy = modf(y, &intPart);
+
+    // Then get noise derivatives for each coord, top left, top right, bottom left, bottom right (4 corners)
+    float s, t, u, v;
+    s = noise(fx, fy);
+    t = noise(fx + 1.0, fy);
+    u = noise(fx, fy + 1.0);
+    v = noise(fx + 1.0, fy + 1.0);
+
+    // Then interpolate all of them (top left -> right, bottom left->right)
+    float int1 = cosLerp(s, t, x - fx);
+    float int2 = cosLerp(u, v, x - fx);
+
+    // Then interpolate top to bottom (hence y - fy)
+    float int3 = cosLerp(int1, int2, y - fy);
+    return int3;
+}
+
+float NoiseFunctions::noiseFBM(int octaves, float x, float y, float amplitude, float freq, int type) {
     float output = 0.0;
     float currAmp = amplitude;
     float currFreq = freq;
     float freqInc = 2.0;
     float ampDecay = 0.5;
+    float maxVal = 0.0;
+
+    // type -> 0 = simplex, 1 = perlin
 
     for (int i = 0; i < octaves; i++) {
-        output += currAmp * noise(x * currFreq, y * currFreq);
+        switch (type) {
+        case 0:
+            output += currAmp * noise(x * currFreq, y * currFreq);
+            break;
+        case 1:
+            output += currAmp * perlinNoise(x * currFreq, y * currFreq);
+            break;
+        }
+        
+        maxVal += currAmp;
         currAmp *= ampDecay;
         currFreq *= freqInc;
     }
 
-    return output;
+    return output/maxVal;
+}
+
+float NoiseFunctions::cosLerp(float curr, float dest, float step) {
+    double ft = step * 3.1415927;
+    double f = (1.0 - cos(ft)) * 0.5;
+    return curr * (1.0 - f) + dest * f;
+
 }
 
 float NoiseFunctions::clamp(float x, float min, float max) {

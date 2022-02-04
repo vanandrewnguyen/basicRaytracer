@@ -18,7 +18,7 @@ qbVector<double> Texture::TexturePerlin::getColourAtUVCoord(const qbVector<doubl
 
 	// Get local colour
 	qbVector<double> localCol{ 4 };
-	float noiseInt = NoiseFunctions::noiseFBM(4, newU, newV, 1.0, 1.0); //NoiseFunctions::smoothstep(-0.1, 0.8, abs(NoiseFunctions::noiseFBM(4, newU, newV, 1.0, 1.0)));
+	float noiseInt = NoiseFunctions::smoothstep(0.2, -0.2, abs(NoiseFunctions::noiseFBM(4, newU, newV, 1.0, 2.0, 1)));
 	localCol = colour * noiseInt;
 
 	return localCol;

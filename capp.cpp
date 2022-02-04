@@ -17,8 +17,8 @@ bool CApp::onInit() {
 
 	// Create the current window
 	const char* windowName = "Simple Raytracer";
-	int windowWidth = 320; //640;
-	int windowHeight = 180; //360;
+	int windowWidth = 1280;//320; //640;
+	int windowHeight = 720;//180; //360;
 	currWindow = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
 
 	// Create the current renderer

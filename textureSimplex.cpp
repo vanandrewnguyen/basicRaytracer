@@ -19,7 +19,8 @@ qbVector<double> Texture::TextureSimplex::getColourAtUVCoord(const qbVector<doub
 
 	// Get local colour
 	qbVector<double> localCol{ 4 };
-    float noiseInt = NoiseFunctions::smoothstep(-0.1, 0.8, abs(NoiseFunctions::noiseFBM(4, newU, newV, 1.0, 1.0)));
+	// Get simplex noise 
+    float noiseInt = NoiseFunctions::smoothstep(0.0, 0.4, abs(NoiseFunctions::noiseFBM(4, newU, newV, 1.0, 1.0, 0)));
 	localCol.SetElement(0, NoiseFunctions::lerp(colour1.GetElement(0), colour2.GetElement(0), noiseInt));
 	localCol.SetElement(1, NoiseFunctions::lerp(colour1.GetElement(1), colour2.GetElement(1), noiseInt));
 	localCol.SetElement(2, NoiseFunctions::lerp(colour1.GetElement(2), colour2.GetElement(2), noiseInt));
