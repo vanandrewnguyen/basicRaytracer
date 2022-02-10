@@ -168,6 +168,7 @@
     <ClCompile Include="simpleMaterial.cpp" />
     <ClCompile Include="simpleRefractiveMaterial.cpp" />
     <ClCompile Include="textureBase.cpp" />
+    <ClCompile Include="textureCellular.cpp" />
     <ClCompile Include="textureChecker.cpp" />
     <ClCompile Include="textureImage.cpp" />
     <ClCompile Include="textureMono.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="simpleMaterial.h" />
     <ClInclude Include="simpleRefractiveMaterial.h" />
     <ClInclude Include="textureBase.h" />
+    <ClInclude Include="textureCellular.h" />
     <ClInclude Include="textureChecker.h" />
     <ClInclude Include="textureImage.h" />
     <ClInclude Include="textureMono.h" />

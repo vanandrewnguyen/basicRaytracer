@@ -36,9 +36,10 @@ bool CApp::onInit() {
 		currScene.render(currImage);
 		
 		// Setup texture (just debugging)
-		/**Texture::TexturePolkaDot testTex;
+		/*
+		Texture::TextureCellular testTex;
 		testTex.setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{4.0, 4.0}});
-		testTex.setRad(0.3, 0.05);
+		//testTex.setRad(0.3, 0.05);
 		for (int y = 0; y < windowHeight; ++y) {
 			for (int x = 0; x < windowWidth; ++x) {
 				double u = (static_cast<double>(x) / (static_cast<double>(windowWidth) / 2.0)) - 1.0;
@@ -47,7 +48,7 @@ bool CApp::onInit() {
 				qbVector<double> outputCol = testTex.getColourAtUVCoord(UV);
 				currImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2));
 			}
-		}*/
+		} */
 
 		// Display scene
 		currImage.handleDisplay();

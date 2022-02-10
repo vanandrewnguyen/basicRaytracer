@@ -21,11 +21,52 @@ uint8_t NoiseFunctions::hash(int32_t i) {
     return perm[static_cast<uint8_t>(i)];
 }
 
+uint8_t NoiseFunctions::hashRev(int32_t i) {
+    return perm[static_cast<uint8_t>(256-i)];
+}
+
 float NoiseFunctions::gradient2D(int32_t hash, float x, float y) {
     const int32_t h = hash & 0x3F;  // Convert low 3 bits of hash code
     const float u = h < 4 ? x : y;  // into 8 simple gradient directions,
     const float v = h < 4 ? y : x;
     return ((h & 1) ? -u : u) + ((h & 2) ? -2.0f * v : 2.0f * v); // and compute the dot product with (x,y).
+}
+
+static float grad(int32_t hash, float x) {
+    const int32_t h = hash & 0x0F;  // Convert low 4 bits of hash code
+    float grad = 1.0f + (h & 7);    // Gradient value 1.0, 2.0, ..., 8.0
+    if ((h & 8) != 0) grad = -grad; // Set a random sign for the gradient
+//  float grad = gradients1D[h];    // NOTE : Test of Gradient look-up table instead of the above
+    return (grad * x);              // Multiply the gradient with the distance
+}
+
+float NoiseFunctions::noise(float x) {
+    float n0, n1;   // Noise contributions from the two "corners"
+
+    // No need to skew the input space in 1D
+
+    // Corners coordinates (nearest integer values):
+    int32_t i0 = floor(x);
+    int32_t i1 = i0 + 1;
+    // Distances to corners (between 0 and 1):
+    float x0 = x - i0;
+    float x1 = x0 - 1.0f;
+
+    // Calculate the contribution from the first corner
+    float t0 = 1.0f - x0 * x0;
+    //  if(t0 < 0.0f) t0 = 0.0f; // not possible
+    t0 *= t0;
+    n0 = t0 * t0 * grad(hash(i0), x0);
+
+    // Calculate the contribution from the second corner
+    float t1 = 1.0f - x1 * x1;
+    //  if(t1 < 0.0f) t1 = 0.0f; // not possible
+    t1 *= t1;
+    n1 = t1 * t1 * grad(hash(i1), x1);
+
+    // The maximum value of this noise is 8*(3/4)^4 = 2.53125
+    // A factor of 0.395 scales to fit exactly within [-1,1]
+    return 0.395f * (n0 + n1);
 }
 
 float NoiseFunctions::noise(float x, float y) {
@@ -166,6 +207,16 @@ float NoiseFunctions::cosLerp(float curr, float dest, float step) {
     double f = (1.0 - cos(ft)) * 0.5;
     return curr * (1.0 - f) + dest * f;
 
+}
+
+float NoiseFunctions::random(float input) {
+    //uint8_t result = hash(static_cast<int32_t>(input));
+    //float output = (static_cast<float>(result) / 256.0);
+    // 
+    //float output = ((float)(rand() % 100) / 100.0) - 0.5;
+    //float output = (hash(static_cast<int>(input)) / 256.0) * 2.0 - 1.0;
+    float output = noise(input);
+    return output;
 }
 
 float NoiseFunctions::clamp(float x, float min, float max) {

@@ -11,6 +11,7 @@
 #include "textureSimplex.h"
 #include "texturePerlin.h"
 #include "texturePolkaDot.h"
+#include "textureCellular.h"
 
 #define PI 3.1416
 
@@ -29,9 +30,9 @@ Scene::Scene() {
 	MaterialBase::ambientLightIntensity = 0.1;
 
 	// TEXTURES //
-	auto floorTexture = std::make_shared<Texture::TextureChecker>(Texture::TextureChecker());
+	auto floorTexture = std::make_shared<Texture::TextureCellular>(Texture::TextureCellular());
 	floorTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{4.0, 4.0}});
-	floorTexture->setColour(qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}}, qbVector<double>{std::vector<double>{0.8, 0.8, 0.8}});
+	floorTexture->setColour(qbVector<double>{std::vector<double>{1.0, 1.0, 1.0}});
 
 	auto cylinderTexture = std::make_shared<Texture::TextureSimplex>(Texture::TextureSimplex());
 	cylinderTexture->setTransform(qbVector<double>{std::vector<double>{0.0, 0.0}}, 0.0, qbVector<double>{std::vector<double>{1.0 * PI, 1.0}});

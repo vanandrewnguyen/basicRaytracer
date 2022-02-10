@@ -3,13 +3,16 @@
 
 #include <math.h>
 #include <algorithm>
+#include <cstdlib>
 
 namespace NoiseFunctions {
 	// These functions are taken from: https://github.com/SRombauts/SimplexNoise/blob/master/src/SimplexNoise.cpp
 	// Credits go to Sebastien Rombauts, file accessed on 3/2/22
 	// Simplex Noise implementation in cpp
 	uint8_t hash(int32_t i);
+	uint8_t hashRev(int32_t i);
 	float gradient2D(int32_t hash, float x, float y);
+	float noise(float x);
 	float noise(float x, float y);
 	float noiseFBM(int octaves, float x, float y, float amplitude, float freq, int type);
 
@@ -20,6 +23,7 @@ namespace NoiseFunctions {
 	float cosLerp(float curr, float dest, float step);
 
 	// Math func
+	float random(float input);
 	float clamp(float x, float min, float max);
 	float smoothstep(float a, float b, float step);
 	float lerp(float curr, float dest, float step);
