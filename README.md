@@ -15,14 +15,14 @@ Features:
 - Material support
 - Refections
 - Refractions
-- UV Texture mapping (importing images and custom textures; polka dots, checkerboard, plain, stripes)
+- UV Texture mapping (importing images and custom textures; voronoi, polka dots, checkerboard, plain, stripes)
 - Noise generation; perlin, simplex (as textures)
 
 Example images
 -
 
 Shadertoy-style noise textures and pattern textures:
-![noise tex2](https://user-images.githubusercontent.com/53636492/152498318-8135fc6c-7cdd-4994-a76f-999e1b37558a.PNG)
+![noise tex3](https://user-images.githubusercontent.com/53636492/153319639-bf3c1f4a-aa51-4ea1-93f5-c6218c58e594.PNG)
 Displaying image textures:
 ![final tex render](https://user-images.githubusercontent.com/53636492/151657150-7bfe58f1-4834-4763-9d07-3f7612fa3060.PNG)
 Cornell Box with shapes and patterns:
