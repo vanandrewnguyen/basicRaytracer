@@ -20,13 +20,15 @@ public:
 	bool render(Image& outputImage);	
 	bool castRay(Ray &castRay, std::shared_ptr<ObjectBase> &closestObject, qbVector<double> &closestIntersectionPoint, 
 		qbVector<double>& closestLocalNormal, qbVector<double>& closestLocalColour);
-
+	void applyPostProcessing(Image& inputImage, int effectIndex, int windowWidth, int windowHeight);
 private:
 	// Functions
 
 private:
 	// Members
 	Camera currCamera;
+
+	int postProcessEffectIndex;
 
 	// List of objects in the scene (ptr to base class, vector acts as list)
 	std::vector<std::shared_ptr<ObjectBase>> objectList;

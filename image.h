@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <SDL.h>
+#include "qbLinAlg/qbVector.h"
 
 /*
 Linking error if we put the functions in cimage.cpp, for some reason it does not link properly.
@@ -50,6 +51,13 @@ public:
 		screenRChannel.at(x).at(y) = r;
 		screenGChannel.at(x).at(y) = g;
 		screenBChannel.at(x).at(y) = b;
+	}
+	qbVector<double> getPixel(const int x, const int y) {
+		qbVector<double> pixelCol{ 3 };
+		pixelCol.SetElement(0, screenRChannel.at(x).at(y));
+		pixelCol.SetElement(1, screenGChannel.at(x).at(y));
+		pixelCol.SetElement(2, screenBChannel.at(x).at(y));
+		return pixelCol;
 	}
 	void handleDisplay() {
 		// Compute max values

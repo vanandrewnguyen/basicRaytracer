@@ -35,6 +35,8 @@ private:
 	bool isRunning;
 	SDL_Window* currWindow;
 	SDL_Renderer* currRenderer;
+	int windowWidth;
+	int windowHeight;
 };
 
 

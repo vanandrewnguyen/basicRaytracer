@@ -16,6 +16,8 @@
 #define PI 3.1416
 
 Scene::Scene() {
+	postProcessEffectIndex = 0;
+
 	// CAMERA //
 	// Set parameters
 	currCamera.setPos(qbVector<double>{std::vector<double>{-3.0, -9.0, -1.0}}); // 0.0, -10.0, 0.0
@@ -422,8 +424,20 @@ bool Scene::castRay(Ray& castRay, std::shared_ptr<ObjectBase>& closestObject, qb
 	return intersectionFound;
 }
 
+void Scene::applyPostProcessing(Image& inputImage, int effectIndex, int windowWidth, int windowHeight) {
+	for (int y = 0; y < windowHeight; ++y) {
+		for (int x = 0; x < windowWidth; ++x) {
+			double u = (static_cast<double>(x) / (static_cast<double>(windowWidth) / 2.0)) - 1.0;
+			double v = (static_cast<double>(y) / (static_cast<double>(windowHeight) / 2.0)) - 1.0;
+			qbVector<double> UV{ std::vector<double>{u, v} };
+			qbVector<double> outputCol = qbVector<double>{ std::vector<double>{1.0, 0.0, 1.0} };
+			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2));
+		}
+	}
+}
 
-/* diffuse lighting
+
+/* diffuse lighting (old)
 
 					// Compute intensity
 					double intensity;

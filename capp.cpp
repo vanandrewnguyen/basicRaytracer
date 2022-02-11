@@ -6,6 +6,8 @@ CApp::CApp() {
 	isRunning = true;
 	currWindow = NULL;
 	currRenderer = NULL;
+	windowWidth = 320;
+	windowHeight = 180;
 }
 
 // Init
@@ -17,8 +19,6 @@ bool CApp::onInit() {
 
 	// Create the current window
 	const char* windowName = "Simple Raytracer";
-	int windowWidth = 320; //640;
-	int windowHeight = 180; //360;
 	currWindow = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
 
 	// Create the current renderer
@@ -34,7 +34,7 @@ bool CApp::onInit() {
 
 		// Render scene
 		currScene.render(currImage);
-		
+		currScene.applyPostProcessing(currImage, 0, windowWidth, windowHeight);
 		// Setup texture (just debugging)
 		/*
 		Texture::TextureCellular testTex;
