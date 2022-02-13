@@ -425,12 +425,24 @@ bool Scene::castRay(Ray& castRay, std::shared_ptr<ObjectBase>& closestObject, qb
 }
 
 void Scene::applyPostProcessing(Image& inputImage, int effectIndex, int windowWidth, int windowHeight) {
+	/*
+	This acts much like a frame buffer in OpenGL, we are essentially manipulating the drawn pixels AFTER they are drawn and rendered to the screen.
+	By looping through each pixel and assigning it a uv coord we can play with the surface and create some nice effects. 
+	*/
 	for (int y = 0; y < windowHeight; ++y) {
 		for (int x = 0; x < windowWidth; ++x) {
 			double u = (static_cast<double>(x) / (static_cast<double>(windowWidth) / 2.0)) - 1.0;
 			double v = (static_cast<double>(y) / (static_cast<double>(windowHeight) / 2.0)) - 1.0;
 			qbVector<double> UV{ std::vector<double>{u, v} };
-			qbVector<double> outputCol = qbVector<double>{ std::vector<double>{1.0, 0.0, 1.0} };
+			// The effect we are making is pixelisation of the canvas, we floor the colours and grab the top left pixel colour to display
+			float cellSize = 4;
+			float pointX = floor(x / cellSize) * cellSize;
+			float pointY = floor(y / cellSize) * cellSize;
+			qbVector<double> outputCol{ 3 }; //= qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
+			qbVector<double> inputCol = inputImage.getPixel(pointX, pointY);
+			outputCol.SetElement(0, inputCol.GetElement(0));
+			outputCol.SetElement(1, inputCol.GetElement(1));
+			outputCol.SetElement(2, inputCol.GetElement(2));
 			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2));
 		}
 	}
