@@ -434,15 +434,60 @@ void Scene::applyPostProcessing(Image& inputImage, int effectIndex, int windowWi
 			double u = (static_cast<double>(x) / (static_cast<double>(windowWidth) / 2.0)) - 1.0;
 			double v = (static_cast<double>(y) / (static_cast<double>(windowHeight) / 2.0)) - 1.0;
 			qbVector<double> UV{ std::vector<double>{u, v} };
+			qbVector<double> outputCol{ 3 };
+
+			// Pixelisation //
 			// The effect we are making is pixelisation of the canvas, we floor the colours and grab the top left pixel colour to display
+			/*
 			float cellSize = 4;
 			float pointX = floor(x / cellSize) * cellSize;
 			float pointY = floor(y / cellSize) * cellSize;
-			qbVector<double> outputCol{ 3 }; //= qbVector<double>{ std::vector<double>{1.0, 1.0, 1.0} };
 			qbVector<double> inputCol = inputImage.getPixel(pointX, pointY);
-			outputCol.SetElement(0, inputCol.GetElement(0));
-			outputCol.SetElement(1, inputCol.GetElement(1));
-			outputCol.SetElement(2, inputCol.GetElement(2));
+			for (int i = 0; i <= 2; i++) {
+				outputCol.SetElement(i, inputCol.GetElement(i));
+			}
+			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2)); */
+
+			// Vignette //
+			// The effect we are doing is a standard vignette, UV is a number -1 -> 1 so we're using the length of u and v (as an inverse 1.0 -) 
+			// to dampen the colour values further from the center (0, 0)
+			/*
+			float len = sqrtf(powf(u, 2.0) + powf(v, 2.0));	
+			qbVector<double> inputCol = inputImage.getPixel(x, y);
+			for (int i = 0; i <= 2; i++) {
+				outputCol.SetElement(i, inputCol.GetElement(i) * (1.0 - len));
+			}
+			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2)); */
+
+			// Chromatic Abberation (Still buggy)
+			/*
+			float intensity = 0.005;
+			float CAOffsetX = (u) * intensity;//(static_cast<double>(x) / (static_cast<double>(windowWidth)) - 0.5) * intensity; // move range to  -0.5 -> 0.5
+			float CAOffsetY = (v) * intensity; //(1.0 - (static_cast<double>(y) / (static_cast<double>(windowHeight))) - 0.5) * intensity;
+			outputCol.SetElement(0, inputImage.getPixel(NoiseFunctions::clamp(x - CAOffsetX, 1, windowWidth-1), NoiseFunctions::clamp(y - CAOffsetY, 1, windowHeight-1)).GetElement(0));
+			outputCol.SetElement(1, inputImage.getPixel(x, y).GetElement(1));
+			outputCol.SetElement(2, inputImage.getPixel(NoiseFunctions::clamp(x + CAOffsetX, 1, windowWidth-1), NoiseFunctions::clamp(y + CAOffsetY, 1, windowHeight-1)).GetElement(2));
+			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2)); */
+
+			// Gaussian Blur //
+			float blurDir = 16.0;
+			float quality = 3.0;
+			float blurRad = 8.0;
+			for (int i = 0; i <= 2; i++) {
+				outputCol.SetElement(i, inputImage.getPixel(x, y).GetElement(i));
+			}
+			for (float d = 0.0; d < PI; d += PI / blurDir) {
+				for (float q = 1.0 / quality; q <= 1.0; q += 1.0 / quality) {
+					float pX = NoiseFunctions::clamp(x + (cos(d) * (blurRad / windowWidth) * q), 1, windowWidth - 1);
+					float pY = NoiseFunctions::clamp(y + (sin(d) * (blurRad / windowHeight) * q), 1, windowHeight - 1);
+					for (int i = 0; i <= 2; i++) {
+						outputCol.SetElement(i, outputCol.GetElement(i) + inputImage.getPixel(pX, pY).GetElement(i));
+					}
+				}
+			}
+			for (int i = 0; i <= 2; i++) {
+				outputCol.SetElement(i, outputCol.GetElement(i) / (quality * blurDir - (blurDir - 1.0)));
+			}
 			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2));
 		}
 	}
