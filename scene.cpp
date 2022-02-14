@@ -459,20 +459,20 @@ void Scene::applyPostProcessing(Image& inputImage, int effectIndex, int windowWi
 			}
 			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2)); */
 
-			// Chromatic Abberation (Still buggy)
+			// Chromatic Abberation (Still buggy) //
 			/*
-			float intensity = 0.005;
-			float CAOffsetX = (u) * intensity;//(static_cast<double>(x) / (static_cast<double>(windowWidth)) - 0.5) * intensity; // move range to  -0.5 -> 0.5
-			float CAOffsetY = (v) * intensity; //(1.0 - (static_cast<double>(y) / (static_cast<double>(windowHeight))) - 0.5) * intensity;
-			outputCol.SetElement(0, inputImage.getPixel(NoiseFunctions::clamp(x - CAOffsetX, 1, windowWidth-1), NoiseFunctions::clamp(y - CAOffsetY, 1, windowHeight-1)).GetElement(0));
+			float intensity = 0.001;
+			float len = intensity * sqrtf(powf(u, 2.0) + powf(v, 2.0));
+			outputCol.SetElement(0, inputImage.getPixel(NoiseFunctions::clamp(x - len, 1, windowWidth - 1), y).GetElement(0));
 			outputCol.SetElement(1, inputImage.getPixel(x, y).GetElement(1));
-			outputCol.SetElement(2, inputImage.getPixel(NoiseFunctions::clamp(x + CAOffsetX, 1, windowWidth-1), NoiseFunctions::clamp(y + CAOffsetY, 1, windowHeight-1)).GetElement(2));
+			outputCol.SetElement(2, inputImage.getPixel(NoiseFunctions::clamp(x + len, 1, windowWidth - 1), y).GetElement(2));
 			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2)); */
 
 			// Gaussian Blur //
-			float blurDir = 16.0;
+			/*
+			float blurDir = 32.0;
 			float quality = 3.0;
-			float blurRad = 8.0;
+			float blurRad = 512.0;
 			for (int i = 0; i <= 2; i++) {
 				outputCol.SetElement(i, inputImage.getPixel(x, y).GetElement(i));
 			}
@@ -488,7 +488,7 @@ void Scene::applyPostProcessing(Image& inputImage, int effectIndex, int windowWi
 			for (int i = 0; i <= 2; i++) {
 				outputCol.SetElement(i, outputCol.GetElement(i) / (quality * blurDir - (blurDir - 1.0)));
 			}
-			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2));
+			inputImage.setPixel(x, y, outputCol.GetElement(0), outputCol.GetElement(1), outputCol.GetElement(2)); */
 		}
 	}
 }

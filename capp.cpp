@@ -6,8 +6,8 @@ CApp::CApp() {
 	isRunning = true;
 	currWindow = NULL;
 	currRenderer = NULL;
-	windowWidth = 160; //320;
-	windowHeight = 90; //180;
+	windowWidth = 640; //320;
+	windowHeight = 360; //180;
 }
 
 // Init
