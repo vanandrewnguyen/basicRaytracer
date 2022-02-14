@@ -17,10 +17,13 @@ Features:
 - Refractions
 - UV Texture mapping (importing images and custom textures; voronoi, polka dots, checkerboard, plain, stripes)
 - Noise generation; perlin, simplex (as textures)
+- Post processing effects and filters
 
 Example images
 -
 
+Post processing filters (Vignette, Gaussian Blur, Pixelisation):
+![filters](https://user-images.githubusercontent.com/53636492/153784921-9a8533d0-4e5e-4343-bebb-6886fe4987f3.png)
 Shadertoy-style noise textures and pattern textures:
 ![noise tex3](https://user-images.githubusercontent.com/53636492/153319639-bf3c1f4a-aa51-4ea1-93f5-c6218c58e594.PNG)
 Displaying image textures:
